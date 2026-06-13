@@ -1,185 +1,3 @@
-// import { useRef, useState } from "react";
-// import emailjs from "@emailjs/browser";
-// import { MdEmail } from "react-icons/md";
-// import { IoLocationSharp } from "react-icons/io5";
-// import { BiTime } from "react-icons/bi";
-// import { FaLinkedinIn, FaInstagram, FaFacebookF, FaGithub } from "react-icons/fa";
-
-// const Contact = () => {
-//   const formRef = useRef();
-//   const [status, setStatus] = useState("idle");
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setStatus("sending");
-
-//     try {
-//       await emailjs.sendForm(
-//         "service_288eg8a",
-//         "template_ugvt7gh",
-//         formRef.current,
-//         "LVp2M-1kr_2Jo9iAF"
-//       );
-//       setStatus("success");
-//       formRef.current.reset();
-//     } catch (err) {
-//       console.error(err);
-//       setStatus("error");
-//     }
-//   };
-
-//   return (
-//     <section
-//       id="contact"
-//       className="min-h-screen bg-gradient-to-br from-black via-black to-[#750B03] px-16 py-16 font-mono"
-//     >
-//       <p className="text-center text-orange-600 text-sm tracking-widest mb-2">Let's connect</p>
-//       <h2 className="text-center text-white text-4xl font-bold mb-3">Get In Touch</h2>
-//       <div className="w-12 h-1 bg-orange-600 mx-auto mb-12 rounded" />
-
-//       <div className="flex gap-6 max-w-6xl mx-auto items-stretch">
-
-//         {/* LEFT */}
-//         <div className="flex flex-col gap-4 w-72 shrink-0 justify-between">
-
-//           <div className="bg-white/10 rounded-2xl p-5">
-//             <p className="text-gray-300 text-sm leading-relaxed">
-//               Have a project in mind or just want to say hi? Fill out the form
-//               or reach me directly — I'm always open to new opportunities.
-//             </p>
-//           </div>
-
-//           <div className="bg-white/10 rounded-2xl p-5 flex flex-col gap-5">
-//             <div className="flex items-center gap-3">
-//               <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center shrink-0">
-//                 <MdEmail className="text-white text-lg" />
-//               </div>
-//               <div>
-//                 <p className="text-gray-500 text-xs">Email</p>
-//                 <p className="text-gray-300 text-xs mt-0.5">miansajeel201@gmail.com</p>
-//               </div>
-//             </div>
-
-//             <div className="flex items-center gap-3">
-//               <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center shrink-0">
-//                 <IoLocationSharp className="text-white text-lg" />
-//               </div>
-//               <div>
-//                 <p className="text-gray-500 text-xs">Location</p>
-//                 <p className="text-gray-300 text-xs mt-0.5">Lahore, Pakistan</p>
-//               </div>
-//             </div>
-
-//             <div className="flex items-center gap-3">
-//               <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center shrink-0">
-//                 <BiTime className="text-white text-lg" />
-//               </div>
-//               <div>
-//                 <p className="text-gray-500 text-xs">Availability</p>
-//                 <p className="text-gray-300 text-xs mt-0.5">Open to freelance & full-time</p>
-//               </div>
-//             </div>
-//           </div>
-
-//           <div className="bg-white/10 rounded-2xl p-10">
-//             <p className="text-gray-500 text-xs mb-8">Find me on</p>
-//             <div className="flex gap-3">
-//               <a href="https://www.linkedin.com/in/sajeel-nawaz-8394313b3/" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-white hover:bg-white/30 transition">
-//                 <FaLinkedinIn className="text-sm" />
-//               </a>
-//               <a href="https://www.instagram.com/sajeelx_" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-white hover:bg-white/30 transition">
-//                 <FaInstagram className="text-sm" />
-//               </a>
-//               <a href="https://www.facebook.com/mian.sajeel.988" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-white hover:bg-white/30 transition">
-//                 <FaFacebookF className="text-sm" />
-//               </a>
-//               <a href="https://github.com/SajeelNawaz098" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-white hover:bg-white/30 transition">
-//                 <FaGithub className="text-sm" />
-//               </a>
-//             </div>
-//           </div>
-
-//         </div>
-
-//         {/* RIGHT - FORM */}
-//         <div className="flex-1 bg-white/10 rounded-2xl p-8 flex flex-col gap-5">
-
-//           <div>
-//             <h3 className="text-white text-2xl font-bold">Send a Message</h3>
-//             <p className="text-gray-500 text-xs mt-1">I'll get back to you within 24 hours.</p>
-//           </div>
-
-//           <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-5 flex-1">
-
-//             <div className="flex flex-col gap-1">
-//               <label className="text-gray-300 text-sm">First Name</label>
-//               <input
-//                 type="text"
-//                 name="from_name"
-//                 required
-//                 className="w-full bg-white/10 border-none rounded-xl px-4 py-3 text-white text-sm outline-none focus:ring-1 focus:ring-[#750B03]"
-//               />
-//             </div>
-
-//             <div className="flex flex-col gap-1">
-//               <label className="text-gray-300 text-sm">Last Name</label>
-//               <input
-//                 type="text"
-//                 name="last_name"
-//                 required
-//                 className="w-full bg-white/10 border-none rounded-xl px-4 py-3 text-white text-sm outline-none focus:ring-1 focus:ring-[#750B03]"
-//               />
-//             </div>
-
-//             <div className="flex flex-col gap-1">
-//               <label className="text-gray-300 text-sm">Email Address</label>
-//               <input
-//                 type="email"
-//                 name="Email"
-//                 required
-//                 className="w-full bg-white/10 border-none rounded-xl px-4 py-3 text-white text-sm outline-none focus:ring-1 focus:ring-[#750B03]"
-//               />
-//             </div>
-
-//             <div className="flex flex-col gap-1 flex-1">
-//               <label className="text-gray-300 text-sm">Message</label>
-//               <textarea
-//                 name="message"
-//                 required
-//                 className="w-full flex-1 min-h-[120px] bg-white/10 border-none rounded-xl px-4 py-3 text-white text-sm outline-none focus:ring-1 focus:ring-[#750B03] resize-none"
-//               />
-//             </div>
-
-//             {status === "success" && (
-//               <p className="text-green-400 text-xs text-center">
-//                 ✓ Message sent! I'll get back to you soon.
-//               </p>
-//             )}
-//             {status === "error" && (
-//               <p className="text-red-400 text-xs text-center">
-//                 ✕ Something went wrong. Please try again.
-//               </p>
-//             )}
-
-//             <button
-//               type="submit"
-//               disabled={status === "sending"}
-//               className="w-full bg-[#750B03] hover:bg-[#5a0902] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold py-3 rounded-xl transition"
-//             >
-//               {status === "sending" ? "Sending..." : "Send"}
-//             </button>
-
-//           </form>
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Contact;
-
-
 import { useRef, useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { MdEmail } from "react-icons/md";
@@ -316,7 +134,6 @@ const Contact = () => {
         className="min-h-screen font-mono py-16 px-16"
         style={{ background: "linear-gradient(135deg, #000 0%, #000 55%, #750B03 100%)" }}
       >
-        {/* Header */}
         <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 48 }}>
           <p style={{ color: "#c2410c", fontSize: 13, letterSpacing: "0.12em", marginBottom: 8 }}>
             Let's connect
@@ -334,10 +151,7 @@ const Contact = () => {
 
         <div style={{ display: "flex", gap: 24, maxWidth: 1152, margin: "0 auto", alignItems: "stretch" }}>
 
-          {/* LEFT */}
           <div style={{ ...entrance("left", 0.15), display: "flex", flexDirection: "column", gap: 16, width: 288, flexShrink: 0 }}>
-
-            {/* Intro card */}
             <div className="contact-card" style={{
               background: "rgba(255,255,255,0.06)",
               border: "1px solid rgba(255,255,255,0.08)",
@@ -348,8 +162,6 @@ const Contact = () => {
                 or reach me directly — I'm always open to new opportunities.
               </p>
             </div>
-
-            {/* Info card */}
             <div className="contact-card" style={{
               background: "rgba(255,255,255,0.06)",
               border: "1px solid rgba(255,255,255,0.08)",
@@ -382,8 +194,6 @@ const Contact = () => {
                 </div>
               ))}
             </div>
-
-            {/* Social card */}
             <div className="contact-card" style={{
               background: "rgba(255,255,255,0.06)",
               border: "1px solid rgba(255,255,255,0.08)",
@@ -417,7 +227,6 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* RIGHT — FORM */}
           <div style={{
             ...entrance("right", 0.2),
             flex: 1,

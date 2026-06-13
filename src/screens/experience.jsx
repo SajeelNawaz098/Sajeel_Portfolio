@@ -1,221 +1,3 @@
-// import React, { useState, useEffect } from "react";
-
-// const experiences = [
-//   {
-//     year: "2025 — Now",
-//     role: "Full Stack Developer",
-//     company: "Leo Tech  Solutions",
-//     companyLink: "https://leotechsolutions.org/",
-//     type: "Full-time",
-//     desc: "Leading UI and backend development for internal tools and client-facing web apps. Responsible for both frontend architecture and backend API design.",
-//     achievements: [
-//       "Built and deployed 3 full-stack web applications",
-//       "Designed REST APIs consumed by mobile and web clients",
-//       "Improved page load performance by 35%",
-//     ],
-//     stack: ["React", "Node.js", "Express.js", "MySQL", "Tailwind CSS"],
-//   },
-//   {
-//     year: "2024 — 2025",
-//     role: "Frontend Developer",
-//     company: "Leo Tech  Solutions",
-//     companyLink: "https://leotechsolutions.org/",
-//     type: "Internship → Full-time",
-//     desc: "Started as an intern and transitioned to a full-time role. Worked on React and React Native projects, contributing to both web dashboards and mobile app interfaces.",
-//     achievements: [
-//       "Promoted from intern to full-time within 3 months",
-//       "Built responsive dashboards used by 500+ daily users",
-//       "Integrated REST APIs across 2 mobile apps",
-//     ],
-//     stack: ["React", "React Native", "Expo", "NativeWind", "JavaScript"],
-//   },
-// ];
-
-// function Particles() {
-//   const particles = Array.from({ length: 18 }, (_, i) => i);
-//   return (
-//     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-//       {particles.map((i) => (
-//         <div
-//           key={i}
-//           className="absolute rounded-full bg-red-500/20 animate-pulse"
-//           style={{
-//             width: `${Math.random() * 6 + 2}px`,
-//             height: `${Math.random() * 6 + 2}px`,
-//             top: `${Math.random() * 100}%`,
-//             left: `${Math.random() * 100}%`,
-//             animationDelay: `${Math.random() * 3}s`,
-//             animationDuration: `${Math.random() * 3 + 2}s`,
-//           }}
-//         />
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default function Experience() {
-//   const [active, setActive] = useState(0);
-//   const [headerVisible, setHeaderVisible] = useState(false);
-//   const [panelVisible, setPanelVisible] = useState(true);
-
-//   useEffect(() => {
-//     const t = setTimeout(() => setHeaderVisible(true), 100);
-//     return () => clearTimeout(t);
-//   }, []);
-
-//   const handleSelect = (i) => {
-//     if (i === active) return;
-//     setPanelVisible(false);
-//     setTimeout(() => {
-//       setActive(i);
-//       setPanelVisible(true);
-//     }, 200);
-//   };
-
-//   const exp = experiences[active];
-
-//   return (
-//     <section
-//       id="experience"
-//       className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-r from-black via-black to-[#750B03] to-100% px-6 md:px-10 py-16"
-//     >
-//       <div
-//         className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#7a000099_0%,_transparent_65%)] pointer-events-none animate-pulse"
-//         style={{ animationDuration: "4s" }}
-//       />
-
-//       <Particles />
-
-//       <div
-//         className="absolute inset-0 pointer-events-none opacity-[0.04]"
-//         style={{
-//           backgroundImage:
-//             "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-//           backgroundSize: "60px 60px",
-//         }}
-//       />
-
-//       <div className="relative z-10 w-full max-w-6xl flex flex-col items-center gap-12">
-
-//         {/* Header */}
-//         <div
-//           className="flex flex-col items-center gap-2 transition-all duration-700"
-//           style={{
-//             opacity: headerVisible ? 1 : 0,
-//             transform: headerVisible ? "translateY(0)" : "translateY(-24px)",
-//           }}
-//         >
-//           <div className="flex items-center gap-3">
-//             <div className="w-8 h-px bg-red-600" />
-//             <span className="font-mono text-xs text-red-500 tracking-[4px] uppercase">Journey</span>
-//             <div className="w-8 h-px bg-red-600" />
-//           </div>
-//           <h2 className="font-mono text-5xl font-bold text-white">
-//             Work <span className="text-red-500">Experience</span>
-//           </h2>
-//         </div>
-
-//         {/* Main Layout */}
-//         <div className="w-full flex flex-col md:flex-row gap-6 items-stretch">
-
-//           {/* LEFT: Sidebar */}
-//           <div className="flex flex-col gap-6 w-full md:w-[260px] h-full mt-20 flex-shrink-0 justify-center">
-//             {experiences.map((e, i) => (
-//               <button
-//                 key={i}
-//                 onClick={() => handleSelect(i)}
-//                 className={`text-left rounded-xl px-5 py-5 transition-all duration-300 border
-//                   ${active === i
-//                     ? "bg-[#3a0a00] border-red-800/60 "
-//                     : "bg-transparent border-transparent hover:bg-white/5 hover:border-white/10"
-//                   }`}
-//               >
-//                 <p className={`font-mono text-xs mb-1 ${active === i ? "text-red-500" : "text-white/30"}`}>
-//                   {e.year}
-//                 </p>
-//                 <p className={`font-mono text-sm font-bold leading-snug ${active === i ? "text-white" : "text-white/60"}`}>
-//                   {e.role}
-//                 </p>
-//                 <p className={`font-mono text-xs mt-1 ${active === i ? "text-white/50" : "text-white/25"}`}>
-//                   {e.company}
-//                 </p>
-//               </button>
-//             ))}
-
-//             {/* 1.5 yr badge */}
-//             {/* <div className="mt-4 px-5 py-4 rounded-xl border border-white/10 bg-white/5">
-//               <p className="font-mono text-xs text-white/30 mb-1 tracking-widest uppercase">Total Experience</p>
-//               <p className="font-mono text-2xl font-bold text-red-500">1.5 <span className="text-sm text-white/40 font-normal">years</span></p>
-//             </div> */}
-//           </div>
-
-//           {/* RIGHT: Detail panel */}
-//           <div
-//             className="flex-1 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 relative overflow-hidden transition-all duration-300"
-//             style={{
-//               opacity: panelVisible ? 1 : 0,
-//               transform: panelVisible ? "translateY(0)" : "translateY(12px)",
-//             }}
-//           >
-//             <div className="absolute top-0 left-8 right-8 h-px bg-red-600/70" />
-
-//             {/* Role + badges */}
-//             <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
-//               <div>
-//                 <h3 className="font-mono text-2xl font-bold text-white">{exp.role}</h3>
-//                 <a href={exp.companyLink} target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-blue-400 hover:text-blue-300 mt-1">
-//                   {exp.company}
-//                 </a>
-//               </div>
-//               <div className="flex gap-2 flex-shrink-0 mt-1">
-//                 <span className="font-mono text-xs bg-[#3a0a00] border border-red-800/60 text-red-400 px-4 py-1.5 rounded-full">
-//                   {exp.year}
-//                 </span>
-//                 <span className="font-mono text-xs bg-white/10 border border-white/15 text-white/50 px-4 py-1.5 rounded-full">
-//                   {exp.type}
-//                 </span>
-//               </div>
-//             </div>
-
-//             {/* Desc */}
-//             <p className="font-mono text-sm text-white/45 leading-relaxed mt-4 mb-6">
-//               {exp.desc}
-//             </p>
-
-//             {/* Key Achievements */}
-//             <p className="font-mono text-xs text-red-600/80 tracking-[3px] uppercase mb-3">
-//               Key Achievements
-//             </p>
-//             <ul className="flex flex-col gap-2 mb-6">
-//               {exp.achievements.map((a, i) => (
-//                 <li key={i} className="flex items-start gap-3">
-//                   <span className="text-red-500 font-mono text-sm mt-0.5">✓</span>
-//                   <span className="font-mono text-sm text-white/60">{a}</span>
-//                 </li>
-//               ))}
-//             </ul>
-
-//             {/* Tech Stack */}
-//             <p className="font-mono text-xs text-red-600/80 tracking-[3px] uppercase mb-3">
-//               Tech Stack
-//             </p>
-//             <div className="flex flex-wrap gap-2">
-//               {exp.stack.map((s) => (
-//                 <span
-//                   key={s}
-//                   className="font-mono text-xs text-white/50 border border-white/15 rounded-full px-4 py-1.5 hover:border-red-700/50 hover:text-white/70 transition-all duration-300"
-//                 >
-//                   {s}
-//                 </span>
-//               ))}
-//             </div>
-//           </div>
-
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
 import React, { useState, useEffect, useRef } from "react";
 
 const experiences = [
@@ -375,7 +157,6 @@ export default function Experience() {
         ref={sectionRef}
         className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-r from-black via-black to-[#750B03] px-6 md:px-10 py-16"
       >
-        {/* Radial glow */}
         <div className="absolute inset-0 pointer-events-none" style={{
           background: "radial-gradient(ellipse at center, #7a000099 0%, transparent 65%)",
           opacity: inView ? 1 : 0,
@@ -384,8 +165,6 @@ export default function Experience() {
         }} />
 
         <Particles visible={inView} />
-
-        {/* Grid */}
         <div className="absolute inset-0 pointer-events-none" style={{
           backgroundImage: "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
           backgroundSize: "60px 60px",
@@ -395,7 +174,6 @@ export default function Experience() {
 
         <div className="relative z-10 w-full max-w-6xl flex flex-col items-center gap-12">
 
-          {/* Header */}
           <div style={entrance("down", 0.05)} className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-3">
               <div style={{
@@ -416,11 +194,7 @@ export default function Experience() {
               Work <span className="text-red-500">Experience</span>
             </h2>
           </div>
-
-          {/* Main Layout */}
           <div className="w-full flex flex-col md:flex-row gap-6 items-stretch">
-
-            {/* Sidebar */}
             <div className="flex flex-col gap-6 w-full md:w-[260px] mt-20 flex-shrink-0 justify-center">
               {experiences.map((e, i) => (
                 <button
@@ -430,7 +204,6 @@ export default function Experience() {
                   style={{
                     background: active === i ? "#3a0a00" : "transparent",
                     borderColor: active === i ? "rgba(153,27,27,0.6)" : "transparent",
-                    // staggered entrance
                     opacity:   inView ? 1 : 0,
                     transform: inView ? "translateX(0)" : "translateX(-24px)",
                     transition: `opacity 0.6s ease ${0.2 + i * 0.1}s,
@@ -444,12 +217,9 @@ export default function Experience() {
                 </button>
               ))}
             </div>
-
-            {/* Detail Panel */}
             <div
               style={{
                 ...entrance("right", 0.25),
-                // panel swap animation layered on top
                 ...(inView ? {
                   opacity:   panelVisible ? 1 : 0,
                   transform: panelVisible ? "translateY(0)" : "translateY(14px)",
@@ -465,13 +235,10 @@ export default function Experience() {
                 overflow: "hidden",
               }}
             >
-              {/* Top accent line */}
               <div style={{
                 position: "absolute", top: 0, left: 32, right: 32, height: 1,
                 background: "rgba(220,38,38,0.7)",
               }} />
-
-              {/* Role + badges */}
               <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
                 <div>
                   <h3 className="font-mono text-2xl font-bold text-white">{exp.role}</h3>
@@ -488,8 +255,6 @@ export default function Experience() {
               </div>
 
               <p className="font-mono text-sm text-white/45 leading-relaxed mt-4 mb-6">{exp.desc}</p>
-
-              {/* Achievements */}
               <p className="font-mono text-xs text-red-600/80 tracking-[3px] uppercase mb-3">Key Achievements</p>
               <ul className="flex flex-col gap-2 mb-6">
                 {exp.achievements.map((a, i) => (
@@ -506,8 +271,6 @@ export default function Experience() {
                   </li>
                 ))}
               </ul>
-
-              {/* Stack */}
               <p className="font-mono text-xs text-red-600/80 tracking-[3px] uppercase mb-3">Tech Stack</p>
               <div className="flex flex-wrap gap-2">
                 {exp.stack.map((s, i) => (

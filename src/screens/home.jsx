@@ -24,17 +24,13 @@ export default function Home() {
   const [playing,   setPlaying]   = useState(false);
   const [volume,    setVolume]    = useState(0.5);
   const [cursorPos, setCursorPos] = useState({ x: -999, y: -999 });
-  const [ready,     setReady]     = useState(false);   // animations gate
-  const [unlocked,  setUnlocked]  = useState(false);   // audio gate
+  const [ready,     setReady]     = useState(false);   
+  const [unlocked,  setUnlocked]  = useState(false);   
 
-  // ── Step 1: trigger entrance animations after first paint ──────────────────
   useEffect(() => {
-    // rAF ensures the browser has painted once before we add classes
     const id = requestAnimationFrame(() => setReady(true));
     return () => cancelAnimationFrame(id);
   }, []);
-
-  // ── Step 2: try silent autoplay; show overlay if browser blocks it ─────────
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -42,12 +38,10 @@ export default function Home() {
     audio.play()
       .then(() => { setPlaying(true); setUnlocked(true); })
       .catch(() => {
-        // Browser blocked — overlay will ask for a click
         setUnlocked(false);
       });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); 
 
-  // ── Step 3: pause / resume on tab visibility ───────────────────────────────
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -59,14 +53,12 @@ export default function Home() {
     return () => document.removeEventListener("visibilitychange", handle);
   }, []);
 
-  // ── Cursor glow ────────────────────────────────────────────────────────────
   useEffect(() => {
     const handle = (e) => setCursorPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", handle);
     return () => window.removeEventListener("mousemove", handle);
   }, []);
 
-  // ── Unlock audio on first user click (overlay) ────────────────────────────
   const handleUnlock = () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -87,7 +79,6 @@ export default function Home() {
     if (audioRef.current) audioRef.current.volume = val;
   };
 
-  // Helper: build inline style for staggered entrance
   const entrance = (delay) => ({
     opacity:   ready ? 1 : 0,
     transform: ready ? "translateY(0)" : "translateY(28px)",
@@ -188,7 +179,6 @@ export default function Home() {
         }
       `}</style>
 
-      {/* ── Audio unlock overlay (only shown when browser blocks autoplay) ── */}
       {!unlocked && (
         <div className="unlock-overlay" onClick={handleUnlock}>
           <div className="unlock-pulse">
@@ -202,7 +192,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* ── Cursor glow ── */}
       <div className="cursor-glow" style={{ left: cursorPos.x, top: cursorPos.y }} />
 
       <div
@@ -214,7 +203,6 @@ export default function Home() {
 
         <main className="relative z-10 mt-50 flex items-start justify-between px-8 pt-24 pb-10">
 
-          {/* ── LEFT CONTENT ── */}
           <div className="flex flex-col gap-7 mt-32 max-w-xl">
 
             <p style={entrance(0.05)} className="flex items-center gap-2 text-white/60 text-sm tracking-widest">
@@ -255,7 +243,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ── RIGHT PROFILE CARD ── */}
           <div className={`hidden lg:flex flex-col mt-20 rounded-3xl h-full overflow-hidden w-72 shadow-2xl bg-[#1e0c09] card-entrance${ready ? " ready" : ""}`}>
 
             <div className="flex items-center justify-between px-4 pt-4 pb-2">
@@ -278,7 +265,6 @@ export default function Home() {
               <p className="text-white/50 text-xs mt-1">Lahore , Pakistan</p>
             </div>
 
-            {/* MUSIC PLAYER */}
             <div className="mx-4 my-2 bg-white/10 rounded-2xl px-4 py-3 flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <div className="flex flex-col">
@@ -310,7 +296,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* SOCIAL */}
             <div className="flex items-center justify-center gap-3 py-3">
               {[
                 { href:"https://www.linkedin.com/in/sajeel-nawaz-8394313b3/", icon:<FaLinkedinIn className="w-4 h-4" /> },
@@ -323,8 +308,6 @@ export default function Home() {
                 </a>
               ))}
             </div>
-
-            {/* CONTACT BUTTON */}
             <div className="px-4 pb-5">
               <button
                 onClick={() => { const s = document.getElementById("contact"); if(s) s.scrollIntoView({ behavior:"smooth", block:"start" }); }}

@@ -1,83 +1,6 @@
-// import React from "react";
-// import profileImage from "../assets/aboutimg.png"; // ← replace with your image path
-// export default function AboutMe() {
-//   return (
-//     <section
-//     id="about"
-//     className="relative min-h-screen flex object-cover w-auto items-center justify-center overflow-hidden bg-gradient-to-r from-black from-0% via-black via-50% to-[#750B03] to-100% font-mono">
-//       <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full  blur-[120px] pointer-events-none" />
-
-//       <div className="relative z-10 w-full max-w-8xl mx-auto px-10 py-16 flex flex-col md:flex-row items-center gap-40">
-
-       
-         
-
-//           <div className=" w-[500px] h-[500px]  items-center justify-center">
-//             <img
-//               src={profileImage}      
-//               alt="Sajeel Nawaz"
-//               className="w-full h-full object-cover object-top"
-//             />
-//           </div>
-      
-
-//         {/* ── RIGHT: Text Content ── */}
-//         <div className="flex flex-col gap-5 flex-1">
-
-//           {/* Label */}
-//           <div className="flex items-center gap-3">
-//             <div className="w-9 h-[2px] bg-orange-500 rounded" />
-//             <span className="text-orange-400 text-sm tracking-wide font-medium">About Me</span>
-//           </div>
-
-//           {/* Heading */}
-//           <h1 className="font-mono text-4xl md:text-5xl font-bold text-white tracking-widest leading-tight">
-//             WHO I AM ?
-//           </h1>
-
-//           {/* Bio paragraphs */}
-//           <p className="font-mono text-sm max-w-[900px] text-white/80 leading-7">
-//             I'm Sajeel Nawaz  a passionate Full Stack Developer focused on building modern,
-//             scalable, and user-friendly web applications. I specialize in both frontend and
-//             backend development, creating seamless digital experiences from concept to
-//             deployment.
-//             <br />
-//             With a strong foundation in technologies like JavaScript, React, Node.js, and
-//             MySQL, I enjoy turning complex problems into simple, efficient solutions. I pay
-//             close attention to performance, clean code, and intuitive UI/UX design.
-//           </p>
-
-//           <p className="font-mono text-sm text-white/80  max-w-[900px] leading-7">
-//             I'm constantly learning and improving my skills, aiming to deliver high-quality
-//             products that create real impact. Whether it's developing responsive interfaces
-//             or robust backend systems, I bring ideas to life through code.
-//           </p>
-
-//           {/* Stats */}
-//           <div className="flex gap-60  mt-2">
-//             <div className="">
-//               <p className="text-4xl font-bold text-white">10+</p>
-//               <p className="text-white/55 text-sm mt-1">Projects</p>
-//             </div>
-//             <div>
-//               <p className="text-4xl font-bold text-white">1+</p>
-//               <p className="text-white/55 text-sm mt-1">Experience</p>
-//             </div>
-//             <div>
-//               <p className="text-4xl font-bold text-white">98%</p>
-//               <p className="text-white/55 text-sm mt-1">Accuracy Rate</p>
-//             </div>
-//           </div>
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// }
 import React, { useEffect, useRef, useState } from "react";
 import profileImage from "../assets/aboutimg.png";
 
-// Hook: fires once when element enters viewport
 function useInView(threshold = 0.25) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
@@ -96,7 +19,6 @@ function useInView(threshold = 0.25) {
   return [ref, inView];
 }
 
-// Animated counter
 function Counter({ target, suffix = "" }) {
   const [count, setCount] = useState(0);
   const [ref, inView] = useInView(0.3);
@@ -122,7 +44,6 @@ function Counter({ target, suffix = "" }) {
 export default function AboutMe() {
   const [sectionRef, inView] = useInView(0.15);
 
-  // Staggered entrance helper
   const slide = (direction, delay) => ({
     opacity:   inView ? 1 : 0,
     transform: inView
@@ -241,7 +162,6 @@ export default function AboutMe() {
         ref={sectionRef}
         className="about-section-bg relative min-h-screen flex items-center justify-center overflow-hidden font-mono"
       >
-        {/* Ambient glow */}
         <div
           className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full pointer-events-none"
           style={{
@@ -250,8 +170,6 @@ export default function AboutMe() {
             transition: "opacity 1.2s ease 0.2s",
           }}
         />
-
-        {/* Subtle grid overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -264,10 +182,8 @@ export default function AboutMe() {
 
         <div className="relative z-10 w-full max-w-8xl mx-auto px-10 py-16 flex flex-col md:flex-row items-center gap-40">
 
-          {/* ── LEFT: Image ── */}
           <div style={slide("left", 0.05)}>
             <div className="about-image-wrap w-[500px] h-[500px]">
-              {/* Scanline effect */}
               <div className="scanline" />
 
               <img
@@ -281,21 +197,14 @@ export default function AboutMe() {
             </div>
           </div>
 
-          {/* ── RIGHT: Text ── */}
           <div className="flex flex-col gap-5 flex-1">
-
-            {/* Label */}
             <div style={slide("right", 0.1)} className="flex items-center gap-3">
               <div className={`label-line${inView ? " visible" : ""}`} />
               <span className="text-orange-400 text-sm tracking-wide font-medium">About Me</span>
             </div>
-
-            {/* Heading */}
             <h1 style={slide("right", 0.2)} className="font-mono text-4xl md:text-5xl font-bold text-white tracking-widest leading-tight">
               WHO I AM ?
             </h1>
-
-            {/* Bio 1 */}
             <div style={slide("right", 0.3)}>
               <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm max-w-[900px] text-white/80 leading-7 pl-4`}>
                 I'm Sajeel Nawaz — a passionate Full Stack Developer focused on building modern,
@@ -307,8 +216,6 @@ export default function AboutMe() {
                 close attention to performance, clean code, and intuitive UI/UX design.
               </p>
             </div>
-
-            {/* Bio 2 */}
             <div style={slide("right", 0.4)}>
               <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm text-white/80 max-w-[900px] leading-7 pl-4`}>
                 I'm constantly learning and improving my skills, aiming to deliver high-quality
@@ -316,8 +223,6 @@ export default function AboutMe() {
                 or robust backend systems, I bring ideas to life through code.
               </p>
             </div>
-
-            {/* Stats */}
             <div style={slide("up", 0.5)} className="flex gap-60 mt-2">
 
               <div className="stat-item">

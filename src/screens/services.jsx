@@ -1,176 +1,3 @@
-// import { FaMobileAlt, FaDesktop, FaWaveSquare, FaCogs, FaImage, FaBug } from "react-icons/fa";
-
-// const services = [
-//   {
-//     title: "Mobile App Development",
-//     description:
-//       "Cross-platform iOS & Android apps built with React Native and Expo. From booking systems to management tools — smooth, fast, and production-ready.",
-//     tags: ["React Native", "Expo", "NativeWind"],
-//     icon: <FaMobileAlt className="w-10 h-10 text-red-800 opacity-60" size={36} />,
-//   },
-//   {
-//     title: "Web App Development",
-//     description:
-//       "Responsive, modern web applications and business websites with clean UI. From landing pages to full management systems with dashboards and data flows.",
-//     tags: ["React", "Vite", "Tailwind CSS"],
-//     icon: <FaDesktop className="w-10 h-10 text-red-800 opacity-60" size={36} />,
-//   },
-//   {
-//     title: "Backend & API Development",
-//     description:
-//       "Scalable REST APIs with authentication, role-based access, and secure database integration. Built to power both web and mobile frontends reliably.",
-//     tags: ["Node.js", "Express", "MySQL"],
-//     icon: <FaWaveSquare className="w-10 h-10 text-red-800 opacity-60" size={36} />,
-//   },
-//   {
-//     title: "Management Systems",
-//     description:
-//       "End-to-end custom systems for hospitals, pharmacies, venues, and businesses — with admin panels, reporting, user roles, and real-time data management.",
-//     tags: ["Full Stack", "Admin Panels", "Role Auth"],
-//     icon: <FaCogs className="w-10 h-10 text-red-800 opacity-60" size={36} />,
-//   },
-//   {
-//     title: "UI/UX Design & Prototyping",
-//     description:
-//       "Pixel-perfect interfaces with strong attention to aesthetics, layout, and usability. Mockup-first workflow before any code is written — no surprises.",
-//     tags: ["Figma", "Component Design", "Dark UI"],
-//     icon: <FaImage className="w-10 h-10 text-red-800 opacity-60" size={36} />,
-//   },
-//   {
-//     title: "Bug Fixing & Optimization",
-//     description:
-//       "Diagnosing and resolving bugs in existing codebases — deduplication issues, broken queries, security flaws, or performance bottlenecks in live production apps.",
-//     tags: ["Debugging", "SQL Tuning", "Code Review"],
-//     icon: <FaBug className="w-10 h-10 text-red-800 opacity-60" size={36} />,
-//   },
-// ];
-
-// export default function Services() {
-//   return (
-//     <section
-//     id="Services"
-//       className="min-h-screen w-full py-16 px-6 font-mono"
-//       style={{
-//         background:
-//           "radial-gradient(ellipse at top right, #7f1111 0%, #1a0000 40%, #000000 70%)",
-//       }}
-//     >
-//       {/* Header */}
-//       <div className="text-center mb-12">
-//         <p
-//           className="text-sm font-mono mb-2"
-//           style={{ color: "#c0522a", letterSpacing: "0.08em" }}
-//         >
-//           What I offer
-//         </p>
-//         <h2
-//           className="text-4xl font-bold text-white mb-4"
-//         >
-//           My Services
-//         </h2>
-//         <div
-//           className="mx-auto"
-//           style={{
-//             width: "48px",
-//             height: "2px",
-//             background: "#c0522a",
-//           }}
-//         />
-//       </div>
-
-//       {/* Cards Grid */}
-//       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
-//         {services.map((service, i) => (
-//           <div
-//             key={i}
-//             className="rounded-2xl p-6 flex flex-col justify-between"
-//             style={{
-//               background: "rgba(255,255,255,0.04)",
-//               border: "1px solid rgba(255,255,255,0.07)",
-//             }}
-//           >
-//             <div>
-//               <h3
-//                 className="text-white font-bold text-base mb-3"
-//               >
-//                 {service.title}
-//               </h3>
-//               <p
-//                 className="text-sm leading-relaxed mb-5"
-//                 style={{ color: "rgba(255,255,255,0.55)" }}
-//               >
-//                 {service.description}
-//               </p>
-//             </div>
-
-//             <div className="flex items-end justify-between">
-//               {/* Tags */}
-//               <div className="flex flex-wrap gap-2">
-//                 {service.tags.map((tag, j) => (
-//                   <span
-//                     key={j}
-//                     className="text-xs px-3 py-1 rounded-full"
-//                     style={{
-//                       background: "rgba(255,255,255,0.06)",
-//                       border: "1px solid rgba(255,255,255,0.12)",
-//                       color: "rgba(255,255,255,0.7)",
-//                     }}
-//                   >
-//                     {tag}
-//                   </span>
-//                 ))}
-//               </div>
-
-//               {/* Icon */}
-//               <div className="ml-4 flex-shrink-0">{service.icon}</div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* CTA Banner */}
-//       <div className="max-w-6xl mx-auto">
-//         <div
-//           className="rounded-2xl py-12 px-8 text-center"
-//           style={{
-//             background: "rgba(255,255,255,0.04)",
-//             border: "1px solid rgba(255,255,255,0.07)",
-//           }}
-//         >
-//           <h3
-//             className="text-3xl font-bold text-white mb-3"
-//           >
-//             Have a project in mind?
-//           </h3>
-//           <p
-//             className="text-sm mb-8"
-//             style={{
-//               color: "rgba(255,255,255,0.4)",
-//               letterSpacing: "0.05em",
-//             }}
-//           >
-//             Let's build something great together.
-//           </p>
-//          <button
-//           onClick={() => {
-//             const section = document.getElementById("contact");
-//             if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
-//           }}
-//           className="inline-flex items-center gap-2 px-7 py-3 rounded-md text-white font-semibold text-sm transition-opacity hover:opacity-80"
-//           style={{
-//             background: "#7f1111",
-//             letterSpacing: "0.05em",
-//           }}
-//         >
-//           Get In Touch
-//           <span className="text-base">↗</span>
-//         </button>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
 import { useEffect, useRef, useState } from "react";
 import { FaMobileAlt, FaDesktop, FaWaveSquare, FaCogs, FaImage, FaBug } from "react-icons/fa";
 
@@ -257,7 +84,6 @@ function ServiceCard({ service, index, inView }) {
         overflow: "hidden",
       }}
     >
-      {/* Corner accent on hover */}
       <div style={{
         position: "absolute", top: 0, left: 0,
         width: 40, height: 40,
@@ -349,7 +175,6 @@ export default function Services() {
         className="min-h-screen w-full py-16 px-6 font-mono"
         style={{ background: "radial-gradient(ellipse at top right, #7f1111 0%, #1a0000 40%, #000000 70%)" }}
       >
-        {/* Header */}
         <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 48 }}>
           <p style={{ color: "#c0522a", fontSize: 13, letterSpacing: "0.08em", marginBottom: 8 }}>
             What I offer
@@ -367,7 +192,6 @@ export default function Services() {
           }} />
         </div>
 
-        {/* Cards */}
         <div
           className="max-w-6xl mx-auto mb-12"
           style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", gap: 20 }}
@@ -376,8 +200,6 @@ export default function Services() {
             <ServiceCard key={i} service={service} index={i} inView={inView} />
           ))}
         </div>
-
-        {/* CTA Banner */}
         <div
           className="max-w-6xl mx-auto"
           style={{

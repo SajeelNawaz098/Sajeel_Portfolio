@@ -1,124 +1,3 @@
-// import { useEffect, useRef } from "react";
-// import { HiHome } from "react-icons/hi";
-// import { HiUser, HiBriefcase } from "react-icons/hi2";
-// import { BsGrid } from "react-icons/bs";
-// import { FaLink, FaServicestack } from "react-icons/fa6";
-// import logo from "../assets/logo.png";
-
-// const NavBtn = ({ id, Icon, activeNav, setActiveNav }) => {
-//   const handleClick = () => {
-//     setActiveNav(id);
-//     const section = document.getElementById(id);
-//     if (section) {
-//       section.scrollIntoView({ behavior: "smooth", block: "start" });
-//     }
-//   };
-
-//   return (
-//     <button
-//       onClick={handleClick}
-//       className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
-//         activeNav === id
-//           ? "bg-white text-gray-900 shadow-md"
-//           : "text-white/70 hover:text-white hover:bg-white/10"
-//       }`}
-//     >
-//       <Icon className="w-5 h-5" />
-//     </button>
-//   );
-// };
-
-// const Logo = ({ size = 40 }) => (
-//   <img src={logo} alt="Logo" width={size} height={size} style={{ objectFit: "contain" }} />
-// );
-
-// export default function Navbar({ activeNav, setActiveNav, time }) {
-//   const isClickScrolling = useRef(false);
-
-//   useEffect(() => {
-//     const sectionIds = ["home", "about", "skills", "Services", "experience", "contact"];
-
-//     const handleScroll = () => {
-//       if (isClickScrolling.current) return;
-
-//       const scrollY = window.scrollY;
-//       const windowHeight = window.innerHeight;
-
-//       let current = sectionIds[0];
-
-//       for (const id of sectionIds) {
-//         const el = document.getElementById(id);
-//         if (!el) continue;
-//         const top = el.getBoundingClientRect().top + scrollY;
-//         if (scrollY >= top - windowHeight * 0.4) {
-//           current = id;
-//         }
-//       }
-
-//       setActiveNav(current);
-//     };
-
-//     window.addEventListener("scroll", handleScroll, { passive: true });
-//     handleScroll();
-
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, [setActiveNav]);
-
-//   const handleNavClick = (id) => {
-//     isClickScrolling.current = true;
-//     setActiveNav(id);
-//     const section = document.getElementById(id);
-//     if (section) {
-//       section.scrollIntoView({ behavior: "smooth", block: "start" });
-//     }
-//     setTimeout(() => {
-//       isClickScrolling.current = false;
-//     }, 800);
-//   };
-
-//   const NavBtnControlled = ({ id, Icon }) => (
-//     <button
-//       onClick={() => handleNavClick(id)}
-//       className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
-//         activeNav === id
-//           ? "bg-white text-gray-900 shadow-md"
-//           : "text-white/70 hover:text-white hover:bg-white/10"
-//       }`}
-//     >
-//       <Icon className="w-5 h-5" />
-//     </button>
-//   );
-
-//   return (
-//     <header className="fixed top-0 left-0 w-full z-50 px-8 py-5">
-//       <div className="grid grid-cols-3 items-center w-full">
-
-//         {/* LEFT - LOGO */}
-//         <div className="flex justify-start">
-//           <Logo />
-//         </div>
-
-//         {/* CENTER - NAV */}
-//         <div className="flex justify-center">
-//           <nav className="flex items-center justify-center gap-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-2 shadow-lg">
-//             <NavBtnControlled id="home"       Icon={HiHome} />
-//             <NavBtnControlled id="about"      Icon={HiUser} />
-//             <NavBtnControlled id="skills"     Icon={BsGrid} />
-//             <NavBtnControlled id="Services"   Icon={FaServicestack} />
-//             <NavBtnControlled id="experience" Icon={HiBriefcase} />
-//             <NavBtnControlled id="contact"    Icon={FaLink} />
-//           </nav>
-//         </div>
-
-//         {/* RIGHT - TIME */}
-//         <div className="flex justify-end">
-//           <p className="text-white/70 text-sm">Lahore, Pakistan &nbsp; {time}</p>
-//         </div>
-
-//       </div>
-//     </header>
-//   );
-// }
 import { useEffect, useRef, useState } from "react";
 import { HiHome } from "react-icons/hi";
 import { HiUser, HiBriefcase } from "react-icons/hi2";
@@ -135,28 +14,22 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
   const [ready, setReady]       = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredId, setHoveredId] = useState(null);
-
-  // ── Fire entrance AFTER first paint, with a tiny extra delay so
-  //    the "from" state is definitely rendered before we transition ───────────
   useEffect(() => {
-    // double-rAF: first frame paints the hidden state, second triggers transition
     let raf1 = requestAnimationFrame(() => {
       let raf2 = requestAnimationFrame(() => {
-        setTimeout(() => setReady(true), 30); // extra 30ms safety net
+        setTimeout(() => setReady(true), 30); 
       });
       return () => cancelAnimationFrame(raf2);
     });
     return () => cancelAnimationFrame(raf1);
   }, []);
 
-  // ── Shrink pill on scroll ──────────────────────────────────────────────────
   useEffect(() => {
     const handle = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handle, { passive: true });
     return () => window.removeEventListener("scroll", handle);
   }, []);
 
-  // ── Active section detection ───────────────────────────────────────────────
   useEffect(() => {
     const sectionIds = ["home", "about", "skills", "Services", "experience", "contact"];
     const handle = () => {
@@ -193,7 +66,6 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
     { id: "contact",    Icon: FaLink,         label: "Contact"    },
   ];
 
-  // ── Reusable entrance style (inline transitions, not CSS animations) ────────
   const fromLeft = {
     opacity:   ready ? 1 : 0,
     transform: ready ? "translateX(0)"   : "translateX(-22px)",
@@ -291,7 +163,6 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
       <header className="fixed top-0 left-0 w-full z-50 px-8 py-5">
         <div className="grid grid-cols-3 items-center w-full">
 
-          {/* LEFT — LOGO */}
           <div className="flex justify-start">
             <div
               style={{
@@ -307,17 +178,14 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
             </div>
           </div>
 
-          {/* CENTER — NAV PILL */}
           <div className="flex justify-center">
             <nav
               style={{
                 ...fromTop,
-                // pill shrink on scroll layered on top of entrance transition
                 padding:    scrolled ? "6px 10px" : "8px 12px",
                 gap:        scrolled ? "2px" : "4px",
                 background: scrolled ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.10)",
                 boxShadow:  scrolled ? "0 4px 24px rgba(0,0,0,0.28)" : "0 2px 12px rgba(0,0,0,0.15)",
-                // merge transitions
                 transition: fromTop.transition
                   + ", padding 0.35s cubic-bezier(.22,.68,0,1.2)"
                   + ", gap 0.35s cubic-bezier(.22,.68,0,1.2)"
@@ -361,7 +229,6 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
             </nav>
           </div>
 
-          {/* RIGHT — TIME */}
           <div className="flex justify-end">
             <p style={fromRight} className="text-white/70 text-sm font-mono">
               Lahore, Pakistan &nbsp; {time}
