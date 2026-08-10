@@ -30,7 +30,7 @@ const skillsData = {
   ],
 };
 
-const languages = ["JavaScript", "TypeScript", "Python", "SQL"];
+const languages = ["JavaScript", "TypeScript", "SQL"];
 
 function useInView(threshold = 0.2) {
   const ref = useRef(null);

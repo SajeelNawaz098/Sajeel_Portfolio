@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import profileImage from "../assets/aboutimg.png";
 
 function useInView(threshold = 0.25) {
   const ref = useRef(null);
@@ -41,17 +40,19 @@ function Counter({ target, suffix = "" }) {
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
+const STACK = ["React", "Node.js", "MySQL", "React Native"];
+
 export default function AboutMe() {
   const [sectionRef, inView] = useInView(0.15);
 
   const slide = (direction, delay) => ({
-    opacity:   inView ? 1 : 0,
+    opacity: inView ? 1 : 0,
     transform: inView
       ? "translate(0,0)"
-      : direction === "left"  ? "translateX(-48px)"
-      : direction === "right" ? "translateX(48px)"
-      : direction === "up"    ? "translateY(36px)"
-      : "translateY(-36px)",
+      : direction === "left" ? "translateX(-40px)"
+      : direction === "right" ? "translateX(40px)"
+      : direction === "up" ? "translateY(30px)"
+      : "translateY(-30px)",
     transition: `opacity 0.75s cubic-bezier(.22,.68,0,1.2) ${delay}s,
                  transform 0.75s cubic-bezier(.22,.68,0,1.2) ${delay}s`,
   });
@@ -59,98 +60,58 @@ export default function AboutMe() {
   return (
     <>
       <style>{`
-        @keyframes imagePulse {
-          0%,100% { box-shadow: 0 0 0px 0px rgba(234,88,12,0); }
-          50%      { box-shadow: 0 0 40px 8px rgba(234,88,12,0.18); }
-        }
-        @keyframes lineGrow {
-          from { width: 0; }
-          to   { width: 36px; }
-        }
-        @keyframes floatImg {
-          0%,100% { transform: translateY(0px);  }
-          50%      { transform: translateY(-8px); }
-        }
-        @keyframes scanline {
-          0%   { top: 0%; }
-          100% { top: 100%; }
-        }
-        @keyframes statUnderline {
-          from { transform: scaleX(0); }
-          to   { transform: scaleX(1); }
-        }
+        @keyframes lineGrow { from { width: 0; } to { width: 36px; } }
+        @keyframes floatCard { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        @keyframes dotPing { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(1.6); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes blinkCursor { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
 
-        .about-image-wrap {
-          position: relative;
-          animation: floatImg 5s ease-in-out infinite;
-        }
-        .about-image-wrap::before {
-          content: '';
-          position: absolute;
-          inset: -2px;
-          border-radius: 4px;
-          background: linear-gradient(135deg, rgba(234,88,12,0.5), transparent 60%);
-          z-index: -1;
-          transition: opacity 0.4s;
-          opacity: 0;
-        }
-        .about-image-wrap:hover::before { opacity: 1; }
-        .about-image-wrap:hover { animation-play-state: paused; }
+        .about-section-bg { background:#0c0503; }
 
-        .scanline {
-          position: absolute;
-          left: 0; right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(234,88,12,0.4), transparent);
-          animation: scanline 3s linear infinite;
-          pointer-events: none;
+        .terminal-card {
+          background:#150807;
+          border:1px solid rgba(227,167,101,0.18);
+          border-radius:1rem;
+          box-shadow:0 25px 50px -12px rgba(0,0,0,0.6);
+          animation:floatCard 6s ease-in-out infinite;
+          transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
         }
+        .terminal-card:hover {
+          border-color:rgba(227,167,101,0.5);
+          box-shadow:0 25px 60px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(227,167,101,0.15);
+          transform:translateY(-4px);
+        }
+        .terminal-dot { width:9px; height:9px; border-radius:50%; }
+        .term-key { color:#e3a765; }
+        .term-str { color:#b9dd9c; }
+        .term-punc { color:rgba(245,237,226,0.4); }
+        .cursor-blink { animation: blinkCursor 1s step-end infinite; color:#e3a765; }
 
-        .label-line {
-          height: 2px;
-          background: #f97316;
-          border-radius: 2px;
-          width: 0;
-        }
-        .label-line.visible {
-          animation: lineGrow 0.6s cubic-bezier(.22,.68,0,1.2) 0.3s forwards;
-        }
+        .label-line { height:2px; background:linear-gradient(90deg,#e3a765,transparent); border-radius:2px; width:0; }
+        .label-line.visible { animation:lineGrow 0.6s cubic-bezier(.22,.68,0,1.2) 0.3s forwards; }
 
-        .stat-item {
-          position: relative;
-          cursor: default;
+        .stat-card { position:relative; overflow:hidden; transition:transform .3s ease, border-color .3s ease; }
+        .stat-card::after {
+          content:''; position:absolute; inset:0;
+          background:linear-gradient(105deg, transparent 40%, rgba(227,167,101,0.18) 50%, transparent 60%);
+          background-size:200% 100%; opacity:0; transition:opacity 0.3s;
         }
-        .stat-item::after {
-          content: '';
-          position: absolute;
-          bottom: -4px; left: 0;
-          height: 1px;
-          width: 100%;
-          background: rgba(249,115,22,0.5);
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.4s ease;
-        }
-        .stat-item:hover::after { transform: scaleX(1); }
-        .stat-item:hover .stat-num { color: #fb923c; transition: color 0.3s; }
+        .stat-card:hover { transform:translateY(-4px); }
+        .stat-card:hover::after { opacity:1; animation:shimmer 0.7s ease forwards; }
 
-        .bio-text {
-          position: relative;
+        .stack-chip {
+          transition:border-color .25s ease, color .25s ease, transform .25s ease;
         }
+        .stack-chip:hover { border-color:#e3a765; color:#f0d3a8; transform:translateY(-2px); }
+
+        .bio-text { position:relative; }
         .bio-text::before {
-          content: '';
-          position: absolute;
-          left: -16px; top: 6px;
-          width: 3px; height: 0;
-          background: rgba(234,88,12,0.5);
-          border-radius: 2px;
-          transition: height 0.6s ease;
+          content:''; position:absolute; left:-16px; top:6px;
+          width:2px; height:0;
+          background:linear-gradient(180deg,#e3a765,rgba(227,167,101,0));
+          border-radius:2px; transition:height 0.7s ease;
         }
-        .bio-text.visible::before { height: calc(100% - 12px); }
-
-        .about-section-bg {
-          background: linear-gradient(to right, #000 0%, #000 50%, #750B03 100%);
-        }
+        .bio-text.visible::before { height:calc(100% - 12px); }
 
         @media (prefers-reduced-motion: reduce) {
           *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
@@ -165,87 +126,134 @@ export default function AboutMe() {
         <div
           className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full pointer-events-none"
           style={{
-            background: "radial-gradient(circle, rgba(117,11,3,0.35) 0%, transparent 70%)",
-            opacity: inView ? 1 : 0,
-            transition: "opacity 1.2s ease 0.2s",
+            background:"radial-gradient(circle, rgba(227,167,101,0.10) 0%, transparent 70%)",
+            opacity:inView ? 1 : 0,
+            transition:"opacity 1.2s ease 0.2s",
           }}
         />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-            opacity: inView ? 1 : 0,
-            transition: "opacity 1.5s ease 0.4s",
+            backgroundImage:"linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+            backgroundSize:"60px 60px",
+            opacity:inView ? 1 : 0,
+            transition:"opacity 1.5s ease 0.4s",
           }}
         />
+        <span
+          className="absolute top-10 right-10 select-none pointer-events-none font-mono font-bold hidden lg:block"
+          style={{
+            fontSize:"220px",
+            lineHeight:1,
+            color:"transparent",
+            WebkitTextStroke:"1px rgba(227,167,101,0.10)",
+            opacity:inView ? 1 : 0,
+            transition:"opacity 1.4s ease 0.3s",
+          }}
+        >
+          SN
+        </span>
 
-        <div className="relative z-10 w-full max-w-8xl mx-auto px-10 py-16 flex flex-col md:flex-row items-center gap-40">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-10 py-16 grid grid-cols-1 md:grid-cols-12 gap-x-14 gap-y-12 items-start">
 
-          <div style={slide("left", 0.05)}>
-            <div className="about-image-wrap w-[500px] h-[500px]">
-              <div className="scanline" />
+          {/* Left column: terminal-style profile card, replaces the photo */}
+          <div style={slide("left", 0.05)} className="md:col-span-5">
+            <div className="terminal-card overflow-hidden">
+              <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
+                <div className="flex items-center gap-2">
+                  <span className="terminal-dot" style={{ background:"#e3a765" }} />
+                  <span className="text-white/40 text-xs tracking-wide">profile.js</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className="terminal-dot"
+                    style={{ background:"#8fd18a", animation:"dotPing 1.8s ease-in-out infinite" }}
+                  />
+                  <span className="text-[#8fd18a] text-[11px] tracking-wide">online</span>
+                </div>
+              </div>
 
-              <img
-                src={profileImage}
-                alt="Sajeel Nawaz"
-                className="w-full h-full object-cover object-top"
-                style={{ display: "block" }}
-              />
+              <div className="px-6 py-7 text-[13px] leading-7">
+                <p><span className="term-punc">const</span> developer = &#123;</p>
+                <p className="pl-4"><span className="term-key">name</span><span className="term-punc">:</span> <span className="term-str">'Sajeel Nawaz'</span><span className="term-punc">,</span></p>
+                <p className="pl-4"><span className="term-key">role</span><span className="term-punc">:</span> <span className="term-str">'Full-Stack Developer'</span><span className="term-punc">,</span></p>
+                <p className="pl-4">
+                  <span className="term-key">stack</span><span className="term-punc">:</span> [
+                  {STACK.map((s, i) => (
+                    <span key={s}>
+                      <span className="term-str">'{s}'</span>{i < STACK.length - 1 && <span className="term-punc">, </span>}
+                    </span>
+                  ))}
+                  ]<span className="term-punc">,</span>
+                </p>
+                <p className="pl-4"><span className="term-key">location</span><span className="term-punc">:</span> <span className="term-str">'Pakistan'</span><span className="term-punc">,</span></p>
+                <p className="pl-4"><span className="term-key">status</span><span className="term-punc">:</span> <span className="term-str">'available for work'</span></p>
+                <p>&#125;<span className="cursor-blink">▍</span></p>
+              </div>
+            </div>
 
-           
+            <div style={slide("left", 0.35)} className="flex flex-wrap gap-2 mt-5">
+              {STACK.map((s) => (
+                <span
+                  key={s}
+                  className="stack-chip text-white/60 text-xs border border-white/10 rounded-full px-3 py-1.5"
+                >
+                  {s}
+                </span>
+              ))}
             </div>
           </div>
 
-          <div className="flex flex-col gap-5 flex-1">
+          {/* Right column: heading, bio, stats */}
+          <div className="flex flex-col gap-5 md:col-span-7">
             <div style={slide("right", 0.1)} className="flex items-center gap-3">
               <div className={`label-line${inView ? " visible" : ""}`} />
-              <span className="text-orange-400 text-sm tracking-wide font-medium">About Me</span>
+              <span className="text-[#b9dd9c]/80 text-sm tracking-widest">// About Me</span>
             </div>
-            <h1 style={slide("right", 0.2)} className="font-mono text-4xl md:text-5xl font-bold text-white tracking-widest leading-tight">
-              WHO I AM ?
+
+            <h1 style={slide("right", 0.2)} className="font-mono text-4xl xl:text-5xl font-light tracking-tight leading-tight">
+              <span className="text-[#e3a765]">{"{"}</span>
+              <span className="text-[#f5ede2]"> Who I Am </span>
+              <span className="text-[#e3a765]">{"}"}</span>
             </h1>
+
             <div style={slide("right", 0.3)}>
-              <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm max-w-[900px] text-white/80 leading-7 pl-4`}>
+              <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm max-w-[620px] text-white/70 leading-7 pl-4`}>
                 I'm Sajeel Nawaz — a passionate Full Stack Developer focused on building modern,
                 scalable, and user-friendly web applications. I specialize in both frontend and
                 backend development, creating seamless digital experiences from concept to deployment.
-                <br />
-                With a strong foundation in technologies like JavaScript, React, Node.js, and
-                MySQL, I enjoy turning complex problems into simple, efficient solutions. I pay
-                close attention to performance, clean code, and intuitive UI/UX design.
               </p>
             </div>
             <div style={slide("right", 0.4)}>
-              <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm text-white/80 max-w-[900px] leading-7 pl-4`}>
-                I'm constantly learning and improving my skills, aiming to deliver high-quality
-                products that create real impact. Whether it's developing responsive interfaces
-                or robust backend systems, I bring ideas to life through code.
+              <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm max-w-[620px] text-white/70 leading-7 pl-4`}>
+                With a strong foundation in JavaScript, React, Node.js, and MySQL, I enjoy turning
+                complex problems into simple, efficient solutions — paying close attention to
+                performance, clean code, and intuitive UI/UX design. I'm constantly learning,
+                aiming to deliver high-quality products that create real impact.
               </p>
             </div>
-            <div style={slide("up", 0.5)} className="flex gap-60 mt-2">
 
-              <div className="stat-item">
-                <p className="stat-num text-4xl font-bold text-white">
+            <div style={slide("up", 0.5)} className="grid grid-cols-3 gap-4 mt-3 max-w-[620px]">
+              <div className="stat-card rounded-2xl px-5 py-4 h-[110px] flex flex-col justify-between cursor-default" style={{ background:"#e3a765" }}>
+                <p className="text-[#150807]/60 text-xs">Projects</p>
+                <p className="text-[#150807] text-3xl font-semibold">
                   <Counter target="10" suffix="+" />
                 </p>
-                <p className="text-white/55 text-sm mt-1">Projects</p>
               </div>
 
-              <div className="stat-item">
-                <p className="stat-num text-4xl font-bold text-white">
+              <div className="stat-card rounded-2xl px-5 py-4 h-[110px] flex flex-col justify-between cursor-default bg-[#150807] border border-white/[0.06]">
+                <p className="text-white/40 text-xs">Experience</p>
+                <p className="text-white text-3xl font-semibold">
                   <Counter target="1" suffix="+" />
                 </p>
-                <p className="text-white/55 text-sm mt-1">Experience</p>
               </div>
 
-              <div className="stat-item">
-                <p className="stat-num text-4xl font-bold text-white">
+              <div className="stat-card rounded-2xl px-5 py-4 h-[110px] flex flex-col justify-between cursor-default bg-[#150807] border border-white/[0.06]">
+                <p className="text-white/40 text-xs">Accuracy Rate</p>
+                <p className="text-white text-3xl font-semibold">
                   <Counter target="98" suffix="%" />
                 </p>
-                <p className="text-white/55 text-sm mt-1">Accuracy Rate</p>
               </div>
-
             </div>
           </div>
 
