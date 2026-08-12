@@ -124,7 +124,7 @@ export default function AboutMe() {
         className="about-section-bg relative min-h-screen flex items-center justify-center overflow-hidden font-mono"
       >
         <div
-          className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full pointer-events-none"
+          className="absolute top-0 right-0 w-[400px] h-[400px] sm:w-[550px] sm:h-[550px] md:w-[700px] md:h-[700px] rounded-full pointer-events-none"
           style={{
             background:"radial-gradient(circle, rgba(227,167,101,0.10) 0%, transparent 70%)",
             opacity:inView ? 1 : 0,
@@ -154,26 +154,26 @@ export default function AboutMe() {
           SN
         </span>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-10 py-16 grid grid-cols-1 md:grid-cols-12 gap-x-14 gap-y-12 items-start">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-24 sm:py-20 md:py-16 grid grid-cols-1 md:grid-cols-12 gap-x-8 lg:gap-x-14 gap-y-10 md:gap-y-12 items-start">
 
           {/* Left column: terminal-style profile card, replaces the photo */}
           <div style={slide("left", 0.05)} className="md:col-span-5">
             <div className="terminal-card overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
+              <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 border-b border-white/[0.06]">
                 <div className="flex items-center gap-2">
                   <span className="terminal-dot" style={{ background:"#e3a765" }} />
-                  <span className="text-white/40 text-xs tracking-wide">profile.js</span>
+                  <span className="text-white/40 text-[11px] sm:text-xs tracking-wide">profile.js</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span
                     className="terminal-dot"
                     style={{ background:"#8fd18a", animation:"dotPing 1.8s ease-in-out infinite" }}
                   />
-                  <span className="text-[#8fd18a] text-[11px] tracking-wide">online</span>
+                  <span className="text-[#8fd18a] text-[10px] sm:text-[11px] tracking-wide">online</span>
                 </div>
               </div>
 
-              <div className="px-6 py-7 text-[13px] leading-7">
+              <div className="px-4 sm:px-6 py-5 sm:py-7 text-[11px] sm:text-[13px] leading-6 sm:leading-7 overflow-x-auto">
                 <p><span className="term-punc">const</span> developer = &#123;</p>
                 <p className="pl-4"><span className="term-key">name</span><span className="term-punc">:</span> <span className="term-str">'Sajeel Nawaz'</span><span className="term-punc">,</span></p>
                 <p className="pl-4"><span className="term-key">role</span><span className="term-punc">:</span> <span className="term-str">'Full-Stack Developer'</span><span className="term-punc">,</span></p>
@@ -192,11 +192,11 @@ export default function AboutMe() {
               </div>
             </div>
 
-            <div style={slide("left", 0.35)} className="flex flex-wrap gap-2 mt-5">
+            <div style={slide("left", 0.35)} className="flex flex-wrap gap-2 mt-4 sm:mt-5">
               {STACK.map((s) => (
                 <span
                   key={s}
-                  className="stack-chip text-white/60 text-xs border border-white/10 rounded-full px-3 py-1.5"
+                  className="stack-chip text-white/60 text-[11px] sm:text-xs border border-white/10 rounded-full px-2.5 sm:px-3 py-1 sm:py-1.5"
                 >
                   {s}
                 </span>
@@ -205,27 +205,27 @@ export default function AboutMe() {
           </div>
 
           {/* Right column: heading, bio, stats */}
-          <div className="flex flex-col gap-5 md:col-span-7">
+          <div className="flex flex-col gap-4 sm:gap-5 md:col-span-7">
             <div style={slide("right", 0.1)} className="flex items-center gap-3">
               <div className={`label-line${inView ? " visible" : ""}`} />
-              <span className="text-[#b9dd9c]/80 text-sm tracking-widest">// About Me</span>
+              <span className="text-[#b9dd9c]/80 text-xs sm:text-sm tracking-widest">// About Me</span>
             </div>
 
-            <h1 style={slide("right", 0.2)} className="font-mono text-4xl xl:text-5xl font-light tracking-tight leading-tight">
+            <h1 style={slide("right", 0.2)} className="font-mono text-3xl sm:text-4xl xl:text-5xl font-light tracking-tight leading-tight">
               <span className="text-[#e3a765]">{"{"}</span>
               <span className="text-[#f5ede2]"> Who I Am </span>
               <span className="text-[#e3a765]">{"}"}</span>
             </h1>
 
             <div style={slide("right", 0.3)}>
-              <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm max-w-[620px] text-white/70 leading-7 pl-4`}>
+              <p className={`bio-text${inView ? " visible" : ""} font-mono text-[13px] sm:text-sm max-w-[620px] text-white/70 leading-6 sm:leading-7 pl-4`}>
                 I'm Sajeel Nawaz — a passionate Full Stack Developer focused on building modern,
                 scalable, and user-friendly web applications. I specialize in both frontend and
                 backend development, creating seamless digital experiences from concept to deployment.
               </p>
             </div>
             <div style={slide("right", 0.4)}>
-              <p className={`bio-text${inView ? " visible" : ""} font-mono text-sm max-w-[620px] text-white/70 leading-7 pl-4`}>
+              <p className={`bio-text${inView ? " visible" : ""} font-mono text-[13px] sm:text-sm max-w-[620px] text-white/70 leading-6 sm:leading-7 pl-4`}>
                 With a strong foundation in JavaScript, React, Node.js, and MySQL, I enjoy turning
                 complex problems into simple, efficient solutions — paying close attention to
                 performance, clean code, and intuitive UI/UX design. I'm constantly learning,
@@ -233,24 +233,24 @@ export default function AboutMe() {
               </p>
             </div>
 
-            <div style={slide("up", 0.5)} className="grid grid-cols-3 gap-4 mt-3 max-w-[620px]">
-              <div className="stat-card rounded-2xl px-5 py-4 h-[110px] flex flex-col justify-between cursor-default" style={{ background:"#e3a765" }}>
-                <p className="text-[#150807]/60 text-xs">Projects</p>
-                <p className="text-[#150807] text-3xl font-semibold">
+            <div style={slide("up", 0.5)} className="grid grid-cols-3 gap-2.5 sm:gap-4 mt-2 sm:mt-3 max-w-[620px]">
+              <div className="stat-card rounded-xl sm:rounded-2xl px-3 sm:px-5 py-3 sm:py-4 h-[80px] sm:h-[100px] md:h-[110px] flex flex-col justify-between cursor-default" style={{ background:"#e3a765" }}>
+                <p className="text-[#150807]/60 text-[10px] sm:text-xs">Projects</p>
+                <p className="text-[#150807] text-lg sm:text-2xl md:text-3xl font-semibold">
                   <Counter target="10" suffix="+" />
                 </p>
               </div>
 
-              <div className="stat-card rounded-2xl px-5 py-4 h-[110px] flex flex-col justify-between cursor-default bg-[#150807] border border-white/[0.06]">
-                <p className="text-white/40 text-xs">Experience</p>
-                <p className="text-white text-3xl font-semibold">
+              <div className="stat-card rounded-xl sm:rounded-2xl px-3 sm:px-5 py-3 sm:py-4 h-[80px] sm:h-[100px] md:h-[110px] flex flex-col justify-between cursor-default bg-[#150807] border border-white/[0.06]">
+                <p className="text-white/40 text-[10px] sm:text-xs">Experience</p>
+                <p className="text-white text-lg sm:text-2xl md:text-3xl font-semibold">
                   <Counter target="1" suffix="+" />
                 </p>
               </div>
 
-              <div className="stat-card rounded-2xl px-5 py-4 h-[110px] flex flex-col justify-between cursor-default bg-[#150807] border border-white/[0.06]">
-                <p className="text-white/40 text-xs">Accuracy Rate</p>
-                <p className="text-white text-3xl font-semibold">
+              <div className="stat-card rounded-xl sm:rounded-2xl px-3 sm:px-5 py-3 sm:py-4 h-[80px] sm:h-[100px] md:h-[110px] flex flex-col justify-between cursor-default bg-[#150807] border border-white/[0.06]">
+                <p className="text-white/40 text-[10px] sm:text-xs">Accuracy Rate</p>
+                <p className="text-white text-lg sm:text-2xl md:text-3xl font-semibold">
                   <Counter target="98" suffix="%" />
                 </p>
               </div>

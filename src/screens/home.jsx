@@ -151,6 +151,10 @@ export default function Home() {
           transform:translate(-50%,-50%);
           transition: left .08s linear, top .08s linear;
           z-index:5; mix-blend-mode:screen;
+          display: none;
+        }
+        @media (min-width: 1024px) {
+          .cursor-glow { display: block; }
         }
 
         .unlock-overlay {
@@ -160,6 +164,8 @@ export default function Home() {
           backdrop-filter: blur(4px);
           cursor:pointer;
           transition: opacity 0.5s ease;
+          padding: 24px;
+          text-align: center;
         }
         .unlock-overlay.hidden-overlay {
           animation: overlayFadeOut 0.5s ease forwards;
@@ -168,10 +174,14 @@ export default function Home() {
           display:flex; flex-direction:column; align-items:center; gap:14px;
         }
         .unlock-ring {
-          width:72px; height:72px; border-radius:50%;
+          width:64px; height:64px; border-radius:50%;
           border: 1.5px solid rgba(255,255,255,0.4);
           display:flex; align-items:center; justify-content:center;
           animation: dotPing 2s ease-in-out infinite;
+        }
+
+        @media (min-width: 640px) {
+          .unlock-ring { width:72px; height:72px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -183,9 +193,9 @@ export default function Home() {
         <div className="unlock-overlay" onClick={handleUnlock}>
           <div className="unlock-pulse">
             <div className="unlock-ring">
-              <HiMiniPlay style={{ width:28, height:28, color:"white" }} />
+              <HiMiniPlay style={{ width:24, height:24, color:"white" }} />
             </div>
-            <p style={{ color:"rgba(255,255,255,0.75)", fontSize:13, letterSpacing:"0.15em", fontFamily:"monospace" }}>
+            <p style={{ color:"rgba(255,255,255,0.75)", fontSize:12, letterSpacing:"0.15em", fontFamily:"monospace" }}>
               CLICK ANYWHERE TO START
             </p>
           </div>
@@ -201,17 +211,17 @@ export default function Home() {
       >
         <audio ref={audioRef} src={music} loop />
 
-        <main className="relative z-10 mt-50 flex items-start justify-between px-8 pt-24 pb-10">
+        <main className="relative z-10 flex items-start justify-between px-4 sm:px-6 md:px-8 pt-28 sm:pt-24 pb-10">
 
-          <div className="flex flex-col gap-7 mt-32 max-w-xl">
+          <div className="flex flex-col gap-5 sm:gap-6 md:gap-7 mt-16 sm:mt-24 lg:mt-32 max-w-xl w-full lg:w-auto">
 
-            <p style={entrance(0.05)} className="flex items-center gap-2 text-white/60 text-sm tracking-widest">
+            <p style={entrance(0.05)} className="flex items-center gap-2 text-white/60 text-xs sm:text-sm tracking-widest">
               <span className="w-1.5 h-1.5 rounded-full bg-white/60 inline-block"
                 style={{ animation:"dotPing 2.5s ease-in-out infinite" }} />
               Introduction
             </p>
 
-            <h1 style={entrance(0.2)} className="text-white text-5xl xl:text-6xl font-light leading-tight tracking-tight">
+            <h1 style={entrance(0.2)} className="text-white text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-light leading-tight tracking-tight">
               Passion meets code,<br />
               creativity meets<br />
               design.
@@ -219,26 +229,26 @@ export default function Home() {
 
             <div style={entrance(0.35)} className="flex flex-wrap gap-2">
               {["Full Stack Development","UI/UX Design","Database Design","Webflow Development"].map((tag) => (
-                <span key={tag} className="tag-pill px-3 py-1 rounded-full border border-white/30 text-white/80 text-xs cursor-default">
+                <span key={tag} className="tag-pill px-2.5 sm:px-3 py-1 rounded-full border border-white/30 text-white/80 text-[11px] sm:text-xs cursor-default">
                   {tag}
                 </span>
               ))}
             </div>
 
-            <div style={entrance(0.5)} className="flex gap-4 mt-2">
-              <div className="stat-card bg-white rounded-2xl px-5 py-4 min-w-[200px] h-[140px] flex flex-col justify-between cursor-default">
+            <div style={entrance(0.5)} className="flex flex-row gap-3 sm:gap-4 mt-2">
+              <div className="stat-card bg-white rounded-2xl px-4 sm:px-5 py-3 sm:py-4 flex-1 sm:min-w-[200px] sm:flex-none h-[110px] sm:h-[140px] flex flex-col justify-between cursor-default">
                 <div className="flex items-center justify-between">
-                  <p className="text-gray-400 text-xs mb-1">Projects</p>
-                  <BlackLogoIcon size={18} />
+                  <p className="text-gray-400 text-[11px] sm:text-xs mb-1">Projects</p>
+                  <BlackLogoIcon size={16} />
                 </div>
-                <p className="text-gray-900 text-3xl font-semibold">10+</p>
+                <p className="text-gray-900 text-2xl sm:text-3xl font-semibold">10+</p>
               </div>
-              <div className="stat-card rounded-2xl px-5 py-4 min-w-[200px] bg-[#1e0c09] opacity-80 h-[140px] flex flex-col justify-between cursor-default">
+              <div className="stat-card rounded-2xl px-4 sm:px-5 py-3 sm:py-4 flex-1 sm:min-w-[200px] sm:flex-none bg-[#1e0c09] opacity-80 h-[110px] sm:h-[140px] flex flex-col justify-between cursor-default">
                 <div className="flex items-center justify-between">
-                  <p className="text-white/50 text-xs">Success Rate</p>
-                  <LogoIcon size={18} />
+                  <p className="text-white/50 text-[11px] sm:text-xs">Success Rate</p>
+                  <LogoIcon size={16} />
                 </div>
-                <p className="text-white text-3xl font-semibold mt-1">98%</p>
+                <p className="text-white text-2xl sm:text-3xl font-semibold mt-1">98%</p>
               </div>
             </div>
           </div>
@@ -322,6 +332,20 @@ export default function Home() {
           </div>
 
         </main>
+
+        {/* Compact mobile/tablet profile summary — shown below lg where the side card is hidden */}
+        <div className="lg:hidden relative z-10 flex items-center gap-3 mx-4 sm:mx-6 mb-8 rounded-2xl bg-[#1e0c09]/90 border border-white/10 px-4 py-3">
+          <LogoIcon size={26} />
+          <div className="flex-1 min-w-0">
+            <p className="text-white text-xs font-semibold tracking-widest uppercase truncate">Sajeel Nawaz</p>
+            <p className="text-white/50 text-[11px]">Lahore, Pakistan</p>
+          </div>
+          <span className="flex items-center gap-1.5 text-[11px] text-white/70 border border-white/20 rounded-full px-2.5 py-1 flex-shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400"
+              style={{ animation:"dotPing 1.8s ease-in-out infinite" }} />
+            Available
+          </span>
+        </div>
       </div>
     </>
   );

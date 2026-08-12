@@ -155,7 +155,7 @@ export default function Experience() {
       <section
         id="experience"
         ref={sectionRef}
-        className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-r from-black via-black to-[#750B03] px-6 md:px-10 py-16"
+        className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-r from-black via-black to-[#750B03] px-4 sm:px-6 md:px-10 py-14 sm:py-16"
       >
         <div className="absolute inset-0 pointer-events-none" style={{
           background: "radial-gradient(ellipse at center, #7a000099 0%, transparent 65%)",
@@ -172,9 +172,9 @@ export default function Experience() {
           transition: "opacity 1.2s ease 0.3s",
         }} />
 
-        <div className="relative z-10 w-full max-w-6xl flex flex-col items-center gap-12">
+        <div className="relative z-10 w-full max-w-6xl flex flex-col items-center gap-8 sm:gap-10 md:gap-12">
 
-          <div style={entrance("down", 0.05)} className="flex flex-col items-center gap-2">
+          <div style={entrance("down", 0.05)} className="flex flex-col items-center gap-2 text-center">
             <div className="flex items-center gap-3">
               <div style={{
                 height: 1,
@@ -190,17 +190,17 @@ export default function Experience() {
                 transition: "width 0.6s ease 0.3s",
               }} />
             </div>
-            <h2 className="font-mono text-5xl font-bold text-white">
+            <h2 className="font-mono text-3xl sm:text-4xl md:text-5xl font-bold text-white">
               Work <span className="text-red-500">Experience</span>
             </h2>
           </div>
-          <div className="w-full flex flex-col md:flex-row gap-6 items-stretch">
-            <div className="flex flex-col gap-6 w-full md:w-[260px] mt-20 flex-shrink-0 justify-center">
+          <div className="w-full flex flex-col md:flex-row gap-4 sm:gap-6 items-stretch">
+            <div className="flex flex-row md:flex-col gap-3 sm:gap-4 md:gap-6 w-full md:w-[260px] mt-0 md:mt-20 flex-shrink-0 justify-center overflow-x-auto">
               {experiences.map((e, i) => (
                 <button
                   key={i}
                   onClick={() => handleSelect(i)}
-                  className={`xp-sidebar-btn${active === i ? " xp-active" : ""} text-left rounded-xl px-5 py-5 border`}
+                  className={`xp-sidebar-btn${active === i ? " xp-active" : ""} text-left rounded-xl px-4 sm:px-5 py-4 sm:py-5 border flex-1 md:flex-none min-w-[160px] md:min-w-0`}
                   style={{
                     background: active === i ? "#3a0a00" : "transparent",
                     borderColor: active === i ? "rgba(153,27,27,0.6)" : "transparent",
@@ -230,27 +230,27 @@ export default function Experience() {
                 border: "1px solid rgba(255,255,255,0.1)",
                 background: "rgba(255,255,255,0.05)",
                 backdropFilter: "blur(8px)",
-                padding: 32,
                 position: "relative",
                 overflow: "hidden",
               }}
+              className="p-5 sm:p-6 md:p-8"
             >
               <div style={{
-                position: "absolute", top: 0, left: 32, right: 32, height: 1,
+                position: "absolute", top: 0, left: 20, right: 20, height: 1,
                 background: "rgba(220,38,38,0.7)",
-              }} />
-              <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
+              }} className="sm:!left-8 sm:!right-8" />
+              <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4 mb-2">
                 <div>
-                  <h3 className="font-mono text-2xl font-bold text-white">{exp.role}</h3>
+                  <h3 className="font-mono text-xl sm:text-2xl font-bold text-white">{exp.role}</h3>
                   <a href={exp.companyLink} target="_blank" rel="noopener noreferrer"
                     className="font-mono text-sm text-blue-400 hover:text-blue-300 mt-1 inline-block"
                     style={{ transition: "color 0.2s" }}>
                     {exp.company}
                   </a>
                 </div>
-                <div className="flex gap-2 flex-shrink-0 mt-1">
-                  <span className="font-mono text-xs bg-[#3a0a00] border border-red-800/60 text-red-400 px-4 py-1.5 rounded-full">{exp.year}</span>
-                  <span className="font-mono text-xs bg-white/10 border border-white/15 text-white/50 px-4 py-1.5 rounded-full">{exp.type}</span>
+                <div className="flex gap-2 flex-shrink-0 mt-1 flex-wrap">
+                  <span className="font-mono text-xs bg-[#3a0a00] border border-red-800/60 text-red-400 px-3 sm:px-4 py-1.5 rounded-full whitespace-nowrap">{exp.year}</span>
+                  <span className="font-mono text-xs bg-white/10 border border-white/15 text-white/50 px-3 sm:px-4 py-1.5 rounded-full whitespace-nowrap">{exp.type}</span>
                 </div>
               </div>
 
@@ -274,7 +274,7 @@ export default function Experience() {
               <p className="font-mono text-xs text-red-600/80 tracking-[3px] uppercase mb-3">Tech Stack</p>
               <div className="flex flex-wrap gap-2">
                 {exp.stack.map((s, i) => (
-                  <span key={s} className="xp-stack-tag font-mono text-xs text-white/50 border border-white/15 rounded-full px-4 py-1.5"
+                  <span key={s} className="xp-stack-tag font-mono text-xs text-white/50 border border-white/15 rounded-full px-3 sm:px-4 py-1.5"
                     style={{
                       opacity:   panelVisible ? 1 : 0,
                       animation: panelVisible ? `stackTagSlide 0.35s ease ${0.25 + i * 0.06}s both` : "none",

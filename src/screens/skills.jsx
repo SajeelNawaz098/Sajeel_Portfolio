@@ -99,9 +99,9 @@ function SkillBar({ name, level, index, sectionVisible }) {
       }}
     >
       <div className="flex justify-between items-center mb-2">
-        <span className="font-mono text-sm text-white tracking-widest">{name}</span>
+        <span className="font-mono text-xs sm:text-sm text-white tracking-widest">{name}</span>
         <span
-          className="font-mono text-sm font-bold text-white"
+          className="font-mono text-xs sm:text-sm font-bold text-white"
           style={{ opacity: width > 0 ? 1 : 0, transition: "opacity 0.4s ease 0.5s" }}
         >
           {level}%
@@ -221,7 +221,7 @@ export default function Skills() {
       <section
         id="skills"
         ref={sectionRef}
-        className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-r from-black via-black to-[#750B03] px-10 py-16"
+        className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-r from-black via-black to-[#750B03] px-4 sm:px-6 md:px-10 py-14 sm:py-16"
       >
         <div
           className="absolute inset-0 pointer-events-none"
@@ -245,11 +245,11 @@ export default function Skills() {
           }}
         />
 
-        <div className="relative z-10 w-full max-w-6xl flex flex-col items-center gap-12">
+        <div className="relative z-10 w-full max-w-6xl flex flex-col items-center gap-8 sm:gap-10 md:gap-12">
 
-          <div style={entrance("down", 0.05)} className="flex flex-col items-center gap-2">
-            <span className="font-mono text-sm text-orange-400 tracking-wide">What I Bring</span>
-            <h2 className="font-mono text-5xl font-bold text-white">My Skills</h2>
+          <div style={entrance("down", 0.05)} className="flex flex-col items-center gap-2 text-center">
+            <span className="font-mono text-xs sm:text-sm text-orange-400 tracking-wide">What I Bring</span>
+            <h2 className="font-mono text-3xl sm:text-4xl md:text-5xl font-bold text-white">My Skills</h2>
             <div
               className="section-divider mt-1"
               style={{
@@ -259,11 +259,11 @@ export default function Skills() {
             />
           </div>
 
-          <div className="w-full flex flex-col md:flex-row gap-6">
+          <div className="w-full flex flex-col md:flex-row gap-4 sm:gap-6">
 
             <div
               style={entrance("left", 0.15)}
-              className="flex flex-col gap-3 w-full md:w-[280px] flex-shrink-0 bg-white/10 border border-white/10 rounded-xl p-6 backdrop-blur-sm"
+              className="grid grid-cols-2 md:flex md:flex-col gap-2 sm:gap-3 w-full md:w-[280px] flex-shrink-0 bg-white/10 border border-white/10 rounded-xl p-4 sm:p-6 backdrop-blur-sm"
             >
               {Object.keys(skillsData).map((cat, i) => {
                 const isActive = active === cat;
@@ -271,7 +271,7 @@ export default function Skills() {
                   <button
                     key={cat}
                     onClick={() => setActive(cat)}
-                    className={`category-btn w-full py-4 rounded-lg font-mono font-bold text-white text-base
+                    className={`category-btn w-full py-3 sm:py-4 rounded-lg font-mono font-bold text-white text-xs sm:text-base
                       ${isActive ? "cat-active bg-gradient-to-r from-black/50 to-[#750B03] shadow-[0_0_18px_#7a000099]" : "bg-white/10"}`}
                     style={{
                       opacity:   inView ? 1 : 0,
@@ -286,7 +286,7 @@ export default function Skills() {
             </div>
             <div
               style={entrance("right", 0.2)}
-              className="skills-panel flex-1 bg-gradient-to-br from-red-950/80 to-red-900/50 border border-white/10 rounded-xl p-8 flex flex-col gap-7 backdrop-blur-sm"
+              className="skills-panel flex-1 bg-gradient-to-br from-red-950/80 to-red-900/50 border border-white/10 rounded-xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-7 backdrop-blur-sm"
             >
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-xl" />
 
@@ -301,13 +301,13 @@ export default function Skills() {
               ))}
             </div>
           </div>
-          <div style={entrance("up", 0.35)} className="flex flex-col items-center gap-4">
-            <span className="font-mono text-orange-400 text-base tracking-wide">Languages</span>
-            <div className="flex flex-wrap gap-3 justify-center">
+          <div style={entrance("up", 0.35)} className="flex flex-col items-center gap-3 sm:gap-4">
+            <span className="font-mono text-orange-400 text-sm sm:text-base tracking-wide">Languages</span>
+            <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
               {languages.map((lang, i) => (
                 <span
                   key={lang}
-                  className="lang-tag px-5 py-2 rounded-full border border-white/30 text-white font-mono text-sm cursor-default"
+                  className="lang-tag px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/30 text-white font-mono text-xs sm:text-sm cursor-default"
                   style={{
                     opacity:   inView ? 1 : 0,
                     transform: inView ? "translateY(0)" : "translateY(16px)",

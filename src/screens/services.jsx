@@ -65,6 +65,7 @@ function ServiceCard({ service, index, inView }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className="p-5 sm:p-6"
       style={{
         opacity:   inView ? 1 : 0,
         transform: inView ? "translateY(0) scale(1)" : "translateY(36px) scale(0.97)",
@@ -75,7 +76,6 @@ function ServiceCard({ service, index, inView }) {
         border: `1px solid ${hovered ? "rgba(192,82,42,0.4)" : "rgba(255,255,255,0.07)"}`,
         boxShadow: hovered ? "0 0 28px rgba(127,17,17,0.25)" : "none",
         borderRadius: 16,
-        padding: 24,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -94,7 +94,7 @@ function ServiceCard({ service, index, inView }) {
       }} />
 
       <div>
-        <h3 style={{ color: "#fff", fontWeight: 700, fontSize: 15, marginBottom: 12, fontFamily: "monospace" }}>
+        <h3 style={{ color: "#fff", fontWeight: 700, fontFamily: "monospace" }} className="text-sm mb-3">
           {service.title}
         </h3>
         <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 13, lineHeight: 1.75, marginBottom: 20, fontFamily: "monospace" }}>
@@ -124,7 +124,9 @@ function ServiceCard({ service, index, inView }) {
           opacity: hovered ? 0.9 : 0.5,
           transform: hovered ? "scale(1.15) rotate(-6deg)" : "scale(1) rotate(0deg)",
           transition: "opacity 0.3s, transform 0.35s cubic-bezier(.22,.68,0,1.2)",
-        }}>
+        }}
+          className="[&>svg]:w-7 [&>svg]:h-7 sm:[&>svg]:w-9 sm:[&>svg]:h-9"
+        >
           {service.icon}
         </div>
       </div>
@@ -172,14 +174,14 @@ export default function Services() {
       <section
         id="Services"
         ref={sectionRef}
-        className="min-h-screen w-full py-16 px-6 font-mono"
+        className="min-h-screen w-full py-14 sm:py-16 px-4 sm:px-6 md:px-8 font-mono"
         style={{ background: "radial-gradient(ellipse at top right, #7f1111 0%, #1a0000 40%, #000000 70%)" }}
       >
-        <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 48 }}>
+        <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 40 }} className="sm:!mb-12">
           <p style={{ color: "#c0522a", fontSize: 13, letterSpacing: "0.08em", marginBottom: 8 }}>
             What I offer
           </p>
-          <h2 style={{ color: "#fff", fontSize: 36, fontWeight: 700, marginBottom: 16 }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl" style={{ color: "#fff", fontWeight: 700, marginBottom: 16 }}>
             My Services
           </h2>
           <div style={{
@@ -193,28 +195,26 @@ export default function Services() {
         </div>
 
         <div
-          className="max-w-6xl mx-auto mb-12"
-          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", gap: 20 }}
+          className="max-w-6xl mx-auto mb-10 sm:mb-12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5"
         >
           {services.map((service, i) => (
             <ServiceCard key={i} service={service} index={i} inView={inView} />
           ))}
         </div>
         <div
-          className="max-w-6xl mx-auto"
+          className="max-w-6xl mx-auto px-6 py-10 sm:px-8 sm:py-12"
           style={{
             ...entrance("up", 0.5),
             background: "rgba(255,255,255,0.04)",
             border: "1px solid rgba(255,255,255,0.07)",
             borderRadius: 16,
-            padding: "48px 32px",
             textAlign: "center",
           }}
         >
-          <h3 style={{ color: "#fff", fontSize: 28, fontWeight: 700, marginBottom: 12 }}>
+          <h3 className="text-xl sm:text-2xl md:text-[28px]" style={{ color: "#fff", fontWeight: 700, marginBottom: 12 }}>
             Have a project in mind?
           </h3>
-          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, letterSpacing: "0.05em", marginBottom: 32 }}>
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, letterSpacing: "0.05em", marginBottom: 28 }}>
             Let's build something great together.
           </p>
           <button

@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { HiHome } from "react-icons/hi";
+import { HiHome, HiMenu, HiX } from "react-icons/hi";
 import { HiUser, HiBriefcase } from "react-icons/hi2";
 import { BsGrid } from "react-icons/bs";
 import { FaLink, FaServicestack } from "react-icons/fa6";
 import logo from "../assets/logo.png";
 
 const Logo = ({ size = 40 }) => (
-  <img src={logo} alt="Logo" width={size} height={size} style={{ objectFit: "contain" }} />
+  <img
+    src={logo}
+    alt="Logo"
+    className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10"
+    style={{ objectFit: "contain" }}
+  />
 );
 
 export default function Navbar({ activeNav, setActiveNav, time }) {
@@ -14,6 +19,13 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
   const [ready, setReady]       = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredId, setHoveredId] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
   useEffect(() => {
     let raf1 = requestAnimationFrame(() => {
       let raf2 = requestAnimationFrame(() => {
@@ -52,6 +64,7 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
   const handleNavClick = (id) => {
     isClickScrolling.current = true;
     setActiveNav(id);
+    setMenuOpen(false);
     const section = document.getElementById(id);
     if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
     setTimeout(() => { isClickScrolling.current = false; }, 800);
@@ -152,6 +165,23 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
           animation: timePulse 2s ease-in-out infinite;
         }
 
+        .hamburger-btn {
+          transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .hamburger-btn:active { transform: scale(0.94); }
+
+        @keyframes mobileMenuIn {
+          from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .mobile-menu-panel {
+          animation: mobileMenuIn 0.22s cubic-bezier(.22,.68,0,1.2) both;
+        }
+        .mobile-menu-item {
+          transition: background 0.2s ease, transform 0.15s ease;
+        }
+        .mobile-menu-item:active { transform: scale(0.98); }
+
         @media (prefers-reduced-motion: reduce) {
           *, *::before, *::after {
             animation-duration: .01ms !important;
@@ -160,8 +190,8 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
         }
       `}</style>
 
-      <header className="fixed top-0 left-0 w-full z-50 px-8 py-5">
-        <div className="grid grid-cols-3 items-center w-full">
+      <header className="fixed top-0 left-0 w-full z-50 px-3 sm:px-5 md:px-8 py-3 md:py-5">
+        <div className="grid grid-cols-3 items-center w-full gap-2">
 
           <div className="flex justify-start">
             <div
@@ -178,12 +208,10 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="hidden sm:flex justify-center min-w-0">
             <nav
               style={{
                 ...fromTop,
-                padding:    scrolled ? "6px 10px" : "8px 12px",
-                gap:        scrolled ? "2px" : "4px",
                 background: scrolled ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.10)",
                 boxShadow:  scrolled ? "0 4px 24px rgba(0,0,0,0.28)" : "0 2px 12px rgba(0,0,0,0.15)",
                 transition: fromTop.transition
@@ -192,26 +220,28 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
                   + ", background 0.3s ease"
                   + ", box-shadow 0.3s ease",
               }}
-              className="flex items-center justify-center backdrop-blur-md border border-white/20 rounded-full"
+              className={`flex items-center justify-center backdrop-blur-md border border-white/20 rounded-full max-w-full
+                ${scrolled ? "px-2.5 py-1.5 gap-1 md:px-2.5 md:py-1.5 md:gap-1"
+                           : "px-3 py-2 gap-1 md:px-3 md:py-2"}`}
             >
               {navItems.map((item, idx) => {
                 const isActive  = activeNav === item.id;
                 const isHovered = hoveredId === item.id;
 
                 return (
-                  <div key={item.id} className="flex items-center" style={{ gap: scrolled ? "2px" : "4px" }}>
+                  <div key={item.id} className="flex items-center gap-1">
                     <button
                       onClick={() => handleNavClick(item.id)}
                       onMouseEnter={() => setHoveredId(item.id)}
                       onMouseLeave={() => setHoveredId(null)}
                       aria-label={item.label}
-                      className={`nav-btn w-10 h-10 rounded-full flex items-center justify-center ${
+                      className={`nav-btn w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                         isActive
                           ? "is-active bg-white text-gray-900"
                           : "text-white/70 hover:text-white hover:bg-white/10"
                       }`}
                     >
-                      <item.Icon className="w-5 h-5" />
+                      <item.Icon className="w-[18px] h-[18px] md:w-5 md:h-5" />
                       {isHovered && !isActive && (
                         <span className="nav-tooltip">{item.label}</span>
                       )}
@@ -229,14 +259,56 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
             </nav>
           </div>
 
-          <div className="flex justify-end">
-            <p style={fromRight} className="text-white/70 text-sm font-mono">
+          {/* Mobile-only: empty middle column keeps the logo/hamburger grid balanced */}
+          <div className="sm:hidden" />
+
+          <div className="flex justify-end items-center gap-2">
+            <p style={fromRight} className="hidden md:block text-white/70 text-xs lg:text-sm font-mono whitespace-nowrap">
               Lahore, Pakistan &nbsp; {time}
               <span className="time-dot" />
             </p>
+            <p style={fromRight} className="hidden sm:block md:hidden text-white/70 text-[11px] font-mono whitespace-nowrap">
+              {time}
+              <span className="time-dot" />
+            </p>
+
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              style={fromRight}
+              className="hamburger-btn sm:hidden w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 text-white/80"
+            >
+              {menuOpen ? <HiX className="w-5 h-5" /> : <HiMenu className="w-5 h-5" />}
+            </button>
           </div>
 
         </div>
+
+        {menuOpen && (
+          <div
+            className="mobile-menu-panel sm:hidden mt-3 mx-1 rounded-2xl border border-white/15 backdrop-blur-md overflow-hidden"
+            style={{ background: "rgba(20,10,5,0.92)", boxShadow: "0 12px 32px rgba(0,0,0,0.4)" }}
+          >
+            {navItems.map((item) => {
+              const isActive = activeNav === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`mobile-menu-item w-full flex items-center gap-3 px-5 py-3.5 text-sm font-mono border-b border-white/5 last:border-b-0 ${
+                    isActive ? "bg-white/10 text-white" : "text-white/70"
+                  }`}
+                >
+                  <item.Icon className="w-4 h-4 flex-shrink-0" />
+                  {item.label}
+                </button>
+              );
+            })}
+            <div className="px-5 py-3 text-white/40 text-[11px] font-mono">
+              Lahore, Pakistan &nbsp; {time}
+            </div>
+          </div>
+        )}
       </header>
     </>
   );

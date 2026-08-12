@@ -131,14 +131,14 @@ const Contact = () => {
       <section
         id="contact"
         ref={sectionRef}
-        className="min-h-screen font-mono py-16 px-16"
+        className="min-h-screen font-mono py-12 sm:py-14 md:py-16 px-4 sm:px-8 md:px-16"
         style={{ background: "linear-gradient(135deg, #000 0%, #000 55%, #750B03 100%)" }}
       >
-        <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 48 }}>
+        <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 40 }} className="sm:!mb-12">
           <p style={{ color: "#c2410c", fontSize: 13, letterSpacing: "0.12em", marginBottom: 8 }}>
             Let's connect
           </p>
-          <h2 style={{ color: "#fff", fontSize: 36, fontWeight: 700, marginBottom: 12 }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl" style={{ color: "#fff", fontWeight: 700, marginBottom: 12 }}>
             Get In Touch
           </h2>
           <div style={{
@@ -149,9 +149,9 @@ const Contact = () => {
           }} />
         </div>
 
-        <div style={{ display: "flex", gap: 24, maxWidth: 1152, margin: "0 auto", alignItems: "stretch" }}>
+        <div className="flex flex-col md:flex-row gap-5 sm:gap-6 max-w-[1152px] mx-auto items-stretch">
 
-          <div style={{ ...entrance("left", 0.15), display: "flex", flexDirection: "column", gap: 16, width: 288, flexShrink: 0 }}>
+          <div style={entrance("left", 0.15)} className="flex flex-col gap-4 sm:gap-4 w-full md:w-[288px] flex-shrink-0">
             <div className="contact-card" style={{
               background: "rgba(255,255,255,0.06)",
               border: "1px solid rgba(255,255,255,0.08)",
@@ -187,9 +187,9 @@ const Contact = () => {
                   }}>
                     <Icon style={{ color: "#fff", fontSize: 16 }} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>{label}</p>
-                    <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 11, marginTop: 2 }}>{value}</p>
+                    <p className="break-words" style={{ color: "rgba(255,255,255,0.75)", fontSize: 11, marginTop: 2 }}>{value}</p>
                   </div>
                 </div>
               ))}
@@ -197,12 +197,12 @@ const Contact = () => {
             <div className="contact-card" style={{
               background: "rgba(255,255,255,0.06)",
               border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 16, padding: 32, flex: 1,
+              borderRadius: 16, padding: 24, flex: 1,
             }}>
               <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, marginBottom: 16, letterSpacing: "0.1em" }}>
                 Find me on
               </p>
-              <div style={{ display: "flex", gap: 12 }}>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 {[
                   { href: "https://www.linkedin.com/in/sajeel-nawaz-8394313b3/", Icon: FaLinkedinIn, delay: 0 },
                   { href: "https://www.instagram.com/sajeelx_",                  Icon: FaInstagram,  delay: 0.07 },
@@ -232,41 +232,59 @@ const Contact = () => {
             flex: 1,
             background: "rgba(255,255,255,0.06)",
             border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 16, padding: 32,
-            display: "flex", flexDirection: "column", gap: 20,
-          }}>
+            borderRadius: 16,
+            display: "flex", flexDirection: "column", gap: 18,
+          }}
+            className="p-5 sm:p-6 md:p-8"
+          >
             <div style={{
               opacity:   inView ? 1 : 0,
               transform: inView ? "translateY(0)" : "translateY(-12px)",
               transition: "opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s",
             }}>
-              <h3 style={{ color: "#fff", fontSize: 22, fontWeight: 700 }}>Send a Message</h3>
+              <h3 style={{ color: "#fff", fontWeight: 700 }} className="text-lg sm:text-xl md:text-[22px]">Send a Message</h3>
               <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 12, marginTop: 4 }}>
                 I'll get back to you within 24 hours.
               </p>
             </div>
 
-            <form ref={formRef} onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20, flex: 1 }}>
-              {[
-                { label: "First Name", name: "from_name", type: "text",  delay: 0.35 },
-                { label: "Last Name",  name: "last_name",  type: "text",  delay: 0.42 },
-                { label: "Email Address", name: "Email",  type: "email", delay: 0.49 },
-              ].map(({ label, name, type, delay }) => (
-                <div key={name} style={{
-                  display: "flex", flexDirection: "column", gap: 6,
-                  opacity:   inView ? 1 : 0,
-                  transform: inView ? "translateX(0)" : "translateX(16px)",
-                  transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
-                }}>
-                  <label style={{ color: "rgba(255,255,255,0.65)", fontSize: 13 }}>{label}</label>
-                  <input
-                    type={type} name={name} required
-                    style={inputStyle(name)}
-                    onFocus={() => setFocused(name)}
-                    onBlur={() => setFocused(null)}
-                  />
-                </div>
-              ))}
+            <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5 flex-1">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
+                {[
+                  { label: "First Name", name: "from_name", type: "text",  delay: 0.35 },
+                  { label: "Last Name",  name: "last_name",  type: "text",  delay: 0.42 },
+                ].map(({ label, name, type, delay }) => (
+                  <div key={name} className="flex-1" style={{
+                    display: "flex", flexDirection: "column", gap: 6,
+                    opacity:   inView ? 1 : 0,
+                    transform: inView ? "translateX(0)" : "translateX(16px)",
+                    transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
+                  }}>
+                    <label style={{ color: "rgba(255,255,255,0.65)", fontSize: 13 }}>{label}</label>
+                    <input
+                      type={type} name={name} required
+                      style={inputStyle(name)}
+                      onFocus={() => setFocused(name)}
+                      onBlur={() => setFocused(null)}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div style={{
+                display: "flex", flexDirection: "column", gap: 6,
+                opacity:   inView ? 1 : 0,
+                transform: inView ? "translateX(0)" : "translateX(16px)",
+                transition: "opacity 0.5s ease 0.49s, transform 0.5s ease 0.49s",
+              }}>
+                <label style={{ color: "rgba(255,255,255,0.65)", fontSize: 13 }}>Email Address</label>
+                <input
+                  type="email" name="Email" required
+                  style={inputStyle("Email")}
+                  onFocus={() => setFocused("Email")}
+                  onBlur={() => setFocused(null)}
+                />
+              </div>
 
               <div style={{
                 display: "flex", flexDirection: "column", gap: 6, flex: 1,
@@ -304,7 +322,6 @@ const Contact = () => {
                   fontSize: 13, fontWeight: 600,
                   padding: "12px 0", borderRadius: 12,
                   border: "none", cursor: status === "sending" ? "not-allowed" : "pointer",
-                  opacity: status === "sending" ? 0.6 : 1,
                   fontFamily: "monospace",
                   letterSpacing: "0.05em",
                   opacity:   inView ? (status === "sending" ? 0.6 : 1) : 0,
