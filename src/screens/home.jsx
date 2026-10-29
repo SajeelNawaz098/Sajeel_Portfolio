@@ -195,9 +195,15 @@ export default function Home() {
             <div className="unlock-ring">
               <HiMiniPlay style={{ width:24, height:24, color:"white" }} />
             </div>
-            <p style={{ color:"rgba(255,255,255,0.75)", fontSize:12, letterSpacing:"0.15em", fontFamily:"monospace" }}>
+            <p style={{ color:"rgba(255,255,255,0.75)", fontSize:12, letterSpacing:"0.15em" }}>
               CLICK ANYWHERE TO START
             </p>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setUnlocked(true); }}
+              style={{ color:"rgba(255,255,255,0.5)", fontSize:11, letterSpacing:"0.12em", textDecoration:"underline" }}>
+              CONTINUE WITHOUT SOUND
+            </button>
           </div>
         </div>
       )}
@@ -281,7 +287,7 @@ export default function Home() {
                   <p className="text-white text-xs font-semibold truncate">Beanie - Piano Version</p>
                   <p className="text-white/40 text-xs">Ambient</p>
                 </div>
-                <button onClick={togglePlay}
+                <button onClick={togglePlay} aria-label={playing ? "Pause music" : "Play music"}
                   className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white"
                   style={{ transition:"background 0.2s, transform 0.15s" }}
                   onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
@@ -301,18 +307,18 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <span className="text-white/30 text-xs">🔈</span>
                 <input type="range" min="0" max="1" step="0.01" value={volume} onChange={handleVolume}
-                  className="flex-1 h-1 accent-white cursor-pointer" />
+                  aria-label="Volume" className="flex-1 h-1 accent-white cursor-pointer" />
                 <span className="text-white/30 text-xs">🔊</span>
               </div>
             </div>
 
             <div className="flex items-center justify-center gap-3 py-3">
               {[
-                { href:"https://www.linkedin.com/in/sajeel-nawaz-8394313b3/", icon:<FaLinkedinIn className="w-4 h-4" /> },
-                { href:"https://www.instagram.com/sajeelx_/",                 icon:<FaInstagram  className="w-4 h-4" /> },
-                { href:"https://www.facebook.com/mian.sajeel.988",             icon:<FaFacebookF  className="w-4 h-4" /> },
-              ].map(({ href, icon }) => (
-                <a key={href} href={href}
+                { label:"LinkedIn", href:"https://www.linkedin.com/in/sajeel-nawaz-8394313b3/", icon:<FaLinkedinIn className="w-4 h-4" /> },
+                { label:"Instagram", href:"https://www.instagram.com/sajeelx_/",                 icon:<FaInstagram  className="w-4 h-4" /> },
+                { label:"Facebook", href:"https://www.facebook.com/mian.sajeel.988",             icon:<FaFacebookF  className="w-4 h-4" /> },
+              ].map(({ label, href, icon }) => (
+                <a key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                   className="social-icon w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/50">
                   {icon}
                 </a>

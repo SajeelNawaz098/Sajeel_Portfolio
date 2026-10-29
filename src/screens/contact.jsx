@@ -1,31 +1,24 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { MdEmail } from "react-icons/md";
-import { IoLocationSharp } from "react-icons/io5";
-import { BiTime } from "react-icons/bi";
 import { FaLinkedinIn, FaInstagram, FaFacebookF, FaGithub } from "react-icons/fa";
+import { HiArrowUpRight } from "react-icons/hi2";
+import Reveal from "../component/Reveal";
 
-function useInView(threshold = 0.15) {
-  const ref = useRef(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, inView];
-}
+const EMAIL = "sajeelnawaz201@gmail.com";
 
-const Contact = () => {
-  const formRef    = useRef();
-  const [sectionRef, inView] = useInView(0.1);
-  const [status, setStatus]  = useState("idle");
-  const [focused, setFocused] = useState(null);
+const socials = [
+  { label: "GitHub", href: "https://github.com/SajeelNawaz098", Icon: FaGithub },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/sajeel-nawaz-8394313b3/", Icon: FaLinkedinIn },
+  { label: "Instagram", href: "https://www.instagram.com/sajeelx_", Icon: FaInstagram },
+  { label: "Facebook", href: "https://www.facebook.com/mian.sajeel.988", Icon: FaFacebookF },
+];
+
+const fieldClass =
+  "w-full bg-[#111111] border border-[#2A2A2A] rounded-lg px-4 py-3 text-sm text-[#F2EEE9] placeholder:text-[#A7A7A7]/50 focus:outline-none focus:border-[#FF493D] focus:ring-1 focus:ring-[#FF493D] transition-colors";
+
+export default function Contact() {
+  const formRef = useRef();
+  const [status, setStatus] = useState("idle");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,303 +33,90 @@ const Contact = () => {
     }
   };
 
-  const entrance = (direction, delay) => ({
-    opacity:   inView ? 1 : 0,
-    transform: inView ? "translate(0,0)"
-      : direction === "left"  ? "translateX(-32px)"
-      : direction === "right" ? "translateX(32px)"
-      : direction === "up"    ? "translateY(28px)"
-      : "translateY(-28px)",
-    transition: `opacity 0.7s cubic-bezier(.22,.68,0,1.2) ${delay}s,
-                 transform 0.7s cubic-bezier(.22,.68,0,1.2) ${delay}s`,
-  });
-
-  const inputStyle = (name) => ({
-    width: "100%",
-    background: focused === name ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)",
-    border: `1px solid ${focused === name ? "rgba(117,11,3,0.8)" : "rgba(255,255,255,0.1)"}`,
-    borderRadius: 12,
-    padding: "12px 16px",
-    color: "#fff",
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "monospace",
-    transition: "background 0.25s, border-color 0.25s, box-shadow 0.25s",
-    boxShadow: focused === name ? "0 0 0 3px rgba(117,11,3,0.2)" : "none",
-  });
-
   return (
-    <>
-      <style>{`
-        @keyframes contactGlow {
-          0%,100% { opacity:.4; }
-          50%      { opacity:.75; }
-        }
-        @keyframes successPop {
-          0%   { transform:scale(0.8); opacity:0; }
-          60%  { transform:scale(1.05); opacity:1; }
-          100% { transform:scale(1); opacity:1; }
-        }
-        @keyframes sendingPulse {
-          0%,100% { opacity:1; }
-          50%      { opacity:0.5; }
-        }
-        @keyframes socialBounce {
-          0%,100% { transform:translateY(0);  }
-          50%      { transform:translateY(-4px); }
-        }
+    <section id="contact" className="bg-[#171717] border-t border-[#2A2A2A] font-body pt-24 md:pt-32">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20">
+          <Reveal className="lg:col-span-6">
+            <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#FF493D] mb-6">06 / Contact</p>
+            <h2 className="font-light text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.05] text-[#F2EEE9]">
+              Have a project in mind?
+            </h2>
+            <p className="text-[#A7A7A7] leading-7 mt-6 max-w-md">
+              Open to freelance work and full-time roles. Send a message and I’ll reply as soon as I can.
+            </p>
 
-        .contact-social-icon {
-          transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-        }
-        .contact-social-icon:hover {
-          background: rgba(255,255,255,0.3) !important;
-          transform: translateY(-3px) scale(1.1);
-          box-shadow: 0 4px 14px rgba(255,255,255,0.1);
-        }
+            <a
+              href={`mailto:${EMAIL}`}
+              className="focus-ring mt-8 inline-flex items-center gap-2 rounded-full bg-[#FF493D] text-[#0B0B0B] font-medium px-6 py-3 hover:bg-[#F2EEE9] transition-colors break-all"
+            >
+              {EMAIL}
+              <HiArrowUpRight className="w-4 h-4 shrink-0" aria-hidden="true" />
+            </a>
 
-        .contact-info-icon {
-          transition: background 0.25s, transform 0.2s;
-        }
-        .contact-info-icon:hover { transform: scale(1.1); }
-
-        .send-btn {
-          transition: background 0.25s, transform 0.2s, box-shadow 0.25s, opacity 0.2s;
-        }
-        .send-btn:not(:disabled):hover {
-          background: #5a0902 !important;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(117,11,3,0.45);
-        }
-        .send-btn:not(:disabled):active { transform: scale(0.98); }
-        .send-btn.sending { animation: sendingPulse 1s ease-in-out infinite; }
-
-        .contact-card {
-          transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-        }
-        .contact-card:hover {
-          background: rgba(255,255,255,0.08) !important;
-          border-color: rgba(117,11,3,0.3) !important;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        }
-
-        .status-success { animation: successPop 0.4s cubic-bezier(.22,.68,0,1.2) both; }
-
-        @media (prefers-reduced-motion: reduce) {
-          *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
-        }
-      `}</style>
-
-      <section
-        id="contact"
-        ref={sectionRef}
-        className="min-h-screen font-mono py-12 sm:py-14 md:py-16 px-4 sm:px-8 md:px-16"
-        style={{ background: "linear-gradient(135deg, #000 0%, #000 55%, #750B03 100%)" }}
-      >
-        <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 40 }} className="sm:!mb-12">
-          <p style={{ color: "#c2410c", fontSize: 13, letterSpacing: "0.12em", marginBottom: 8 }}>
-            Let's connect
-          </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl" style={{ color: "#fff", fontWeight: 700, marginBottom: 12 }}>
-            Get In Touch
-          </h2>
-          <div style={{
-            height: 3, borderRadius: 2, background: "#c2410c",
-            margin: "0 auto",
-            width: inView ? 48 : 0,
-            transition: "width 0.7s cubic-bezier(.22,.68,0,1.2) 0.3s",
-          }} />
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-5 sm:gap-6 max-w-[1152px] mx-auto items-stretch">
-
-          <div style={entrance("left", 0.15)} className="flex flex-col gap-4 sm:gap-4 w-full md:w-[288px] flex-shrink-0">
-            <div className="contact-card" style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 16, padding: 20,
-            }}>
-              <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 13, lineHeight: 1.8 }}>
-                Have a project in mind or just want to say hi? Fill out the form
-                or reach me directly — I'm always open to new opportunities.
-              </p>
-            </div>
-            <div className="contact-card" style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 16, padding: 20,
-              display: "flex", flexDirection: "column", gap: 20,
-            }}>
-              {[
-                { Icon: MdEmail,        label: "Email",        value: "miansajeel201@gmail.com", delay: 0.25 },
-                { Icon: IoLocationSharp, label: "Location",    value: "Lahore, Pakistan",          delay: 0.33 },
-                { Icon: BiTime,          label: "Availability", value: "Open to freelance & full-time", delay: 0.41 },
-              ].map(({ Icon, label, value, delay }) => (
-                <div key={label} style={{
-                  display: "flex", alignItems: "center", gap: 12,
-                  opacity:   inView ? 1 : 0,
-                  transform: inView ? "translateX(0)" : "translateX(-12px)",
-                  transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
-                }}>
-                  <div className="contact-info-icon" style={{
-                    width: 36, height: 36,
-                    background: "rgba(255,255,255,0.12)",
-                    borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0,
-                  }}>
-                    <Icon style={{ color: "#fff", fontSize: 16 }} />
-                  </div>
-                  <div className="min-w-0">
-                    <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>{label}</p>
-                    <p className="break-words" style={{ color: "rgba(255,255,255,0.75)", fontSize: 11, marginTop: 2 }}>{value}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="contact-card" style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 16, padding: 24, flex: 1,
-            }}>
-              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, marginBottom: 16, letterSpacing: "0.1em" }}>
-                Find me on
-              </p>
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                {[
-                  { href: "https://www.linkedin.com/in/sajeel-nawaz-8394313b3/", Icon: FaLinkedinIn, delay: 0 },
-                  { href: "https://www.instagram.com/sajeelx_",                  Icon: FaInstagram,  delay: 0.07 },
-                  { href: "https://www.facebook.com/mian.sajeel.988",             Icon: FaFacebookF,  delay: 0.14 },
-                  { href: "https://github.com/SajeelNawaz098",                    Icon: FaGithub,     delay: 0.21 },
-                ].map(({ href, Icon, delay }) => (
-                  <a key={href} href={href} target="_blank" rel="noopener noreferrer"
-                    className="contact-social-icon"
-                    style={{
-                      width: 40, height: 40,
-                      background: "rgba(255,255,255,0.12)",
-                      borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
-                      color: "#fff",
-                      opacity:   inView ? 1 : 0,
-                      transform: inView ? "translateY(0)" : "translateY(12px)",
-                      transition: `opacity 0.5s ease ${0.5 + delay}s, transform 0.5s ease ${0.5 + delay}s`,
-                    }}>
-                    <Icon style={{ fontSize: 14 }} />
+            <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3">
+              {socials.map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus-ring inline-flex items-center gap-2 text-sm text-[#A7A7A7] hover:text-[#FF493D] transition-colors"
+                  >
+                    <Icon className="w-4 h-4" aria-hidden="true" />
+                    {label}
                   </a>
-                ))}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal delay={100} className="lg:col-span-6">
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="rounded-xl border border-[#2A2A2A] bg-[#0B0B0B] p-6 sm:p-8 flex flex-col gap-5"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <label className="flex flex-col gap-2 text-sm text-[#A7A7A7]">
+                  First name
+                  <input type="text" name="from_name" required autoComplete="given-name" className={fieldClass} />
+                </label>
+                <label className="flex flex-col gap-2 text-sm text-[#A7A7A7]">
+                  Last name
+                  <input type="text" name="last_name" required autoComplete="family-name" className={fieldClass} />
+                </label>
               </div>
-            </div>
-          </div>
+              <label className="flex flex-col gap-2 text-sm text-[#A7A7A7]">
+                Email address
+                <input type="email" name="Email" required autoComplete="email" className={fieldClass} />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-[#A7A7A7]">
+                Message
+                <textarea name="message" required rows={5} className={`${fieldClass} resize-none`} />
+              </label>
 
-          <div style={{
-            ...entrance("right", 0.2),
-            flex: 1,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 16,
-            display: "flex", flexDirection: "column", gap: 18,
-          }}
-            className="p-5 sm:p-6 md:p-8"
-          >
-            <div style={{
-              opacity:   inView ? 1 : 0,
-              transform: inView ? "translateY(0)" : "translateY(-12px)",
-              transition: "opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s",
-            }}>
-              <h3 style={{ color: "#fff", fontWeight: 700 }} className="text-lg sm:text-xl md:text-[22px]">Send a Message</h3>
-              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 12, marginTop: 4 }}>
-                I'll get back to you within 24 hours.
-              </p>
-            </div>
-
-            <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5 flex-1">
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
-                {[
-                  { label: "First Name", name: "from_name", type: "text",  delay: 0.35 },
-                  { label: "Last Name",  name: "last_name",  type: "text",  delay: 0.42 },
-                ].map(({ label, name, type, delay }) => (
-                  <div key={name} className="flex-1" style={{
-                    display: "flex", flexDirection: "column", gap: 6,
-                    opacity:   inView ? 1 : 0,
-                    transform: inView ? "translateX(0)" : "translateX(16px)",
-                    transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
-                  }}>
-                    <label style={{ color: "rgba(255,255,255,0.65)", fontSize: 13 }}>{label}</label>
-                    <input
-                      type={type} name={name} required
-                      style={inputStyle(name)}
-                      onFocus={() => setFocused(name)}
-                      onBlur={() => setFocused(null)}
-                    />
-                  </div>
-                ))}
+              <div aria-live="polite" className="min-h-[20px] text-sm">
+                {status === "success" && <p className="text-[#F2EEE9]">Message sent — I’ll get back to you soon.</p>}
+                {status === "error" && <p className="text-[#FF493D]">Something went wrong. Please try again or email me directly.</p>}
               </div>
-
-              <div style={{
-                display: "flex", flexDirection: "column", gap: 6,
-                opacity:   inView ? 1 : 0,
-                transform: inView ? "translateX(0)" : "translateX(16px)",
-                transition: "opacity 0.5s ease 0.49s, transform 0.5s ease 0.49s",
-              }}>
-                <label style={{ color: "rgba(255,255,255,0.65)", fontSize: 13 }}>Email Address</label>
-                <input
-                  type="email" name="Email" required
-                  style={inputStyle("Email")}
-                  onFocus={() => setFocused("Email")}
-                  onBlur={() => setFocused(null)}
-                />
-              </div>
-
-              <div style={{
-                display: "flex", flexDirection: "column", gap: 6, flex: 1,
-                opacity:   inView ? 1 : 0,
-                transform: inView ? "translateX(0)" : "translateX(16px)",
-                transition: "opacity 0.5s ease 0.56s, transform 0.5s ease 0.56s",
-              }}>
-                <label style={{ color: "rgba(255,255,255,0.65)", fontSize: 13 }}>Message</label>
-                <textarea
-                  name="message" required
-                  style={{ ...inputStyle("message"), minHeight: 120, resize: "none", flex: 1 }}
-                  onFocus={() => setFocused("message")}
-                  onBlur={() => setFocused(null)}
-                />
-              </div>
-
-              {status === "success" && (
-                <p className="status-success" style={{ color: "#4ade80", fontSize: 12, textAlign: "center" }}>
-                  ✓ Message sent! I'll get back to you soon.
-                </p>
-              )}
-              {status === "error" && (
-                <p style={{ color: "#f87171", fontSize: 12, textAlign: "center" }}>
-                  ✕ Something went wrong. Please try again.
-                </p>
-              )}
 
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className={`send-btn${status === "sending" ? " sending" : ""}`}
-                style={{
-                  background: "#750B03",
-                  color: "#fff",
-                  fontSize: 13, fontWeight: 600,
-                  padding: "12px 0", borderRadius: 12,
-                  border: "none", cursor: status === "sending" ? "not-allowed" : "pointer",
-                  fontFamily: "monospace",
-                  letterSpacing: "0.05em",
-                  opacity:   inView ? (status === "sending" ? 0.6 : 1) : 0,
-                  transform: inView ? "translateY(0)" : "translateY(10px)",
-                  transition: "opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s, background 0.25s, box-shadow 0.25s",
-                }}
+                className="focus-ring rounded-lg bg-[#F2EEE9] text-[#0B0B0B] font-medium py-3 hover:bg-[#FF493D] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {status === "sending" ? "Sending..." : "Send Message"}
+                {status === "sending" ? "Sending…" : "Send message"}
               </button>
             </form>
-          </div>
+          </Reveal>
         </div>
-      </section>
-    </>
-  );
-};
 
-export default Contact;
+        <footer className="mt-24 py-8 border-t border-[#2A2A2A] flex flex-col sm:flex-row gap-2 justify-between text-xs text-[#A7A7A7] font-mono">
+          <span>© {new Date().getFullYear()} Sajeel Nawaz</span>
+          <span>Lahore, Pakistan</span>
+        </footer>
+      </div>
+    </section>
+  );
+}

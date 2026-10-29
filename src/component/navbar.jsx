@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { HiHome, HiMenu, HiX } from "react-icons/hi";
-import { HiUser, HiBriefcase } from "react-icons/hi2";
+import { HiUser, HiBriefcase, HiFolder } from "react-icons/hi2";
 import { BsGrid } from "react-icons/bs";
 import { FaLink, FaServicestack } from "react-icons/fa6";
 import logo from "../assets/logo.png";
@@ -43,7 +43,7 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
   }, []);
 
   useEffect(() => {
-    const sectionIds = ["home", "about", "skills", "Services", "experience", "contact"];
+    const sectionIds = ["home", "projects", "about", "experience", "skills", "services", "contact"];
     const handle = () => {
       if (isClickScrolling.current) return;
       const scrollY = window.scrollY;
@@ -72,10 +72,11 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
 
   const navItems = [
     { id: "home",       Icon: HiHome,         label: "Home"       },
+    { id: "projects",   Icon: HiFolder,       label: "Projects"   },
     { id: "about",      Icon: HiUser,         label: "About"      },
-    { id: "skills",     Icon: BsGrid,         label: "Skills"     },
-    { id: "Services",   Icon: FaServicestack, label: "Services"   },
     { id: "experience", Icon: HiBriefcase,    label: "Experience" },
+    { id: "skills",     Icon: BsGrid,         label: "Skills"     },
+    { id: "services",   Icon: FaServicestack, label: "Services"   },
     { id: "contact",    Icon: FaLink,         label: "Contact"    },
   ];
 
@@ -125,7 +126,7 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
         .nav-btn:hover { transform: translateY(-2px); }
         .nav-btn.is-active {
           animation: activePop 0.35s cubic-bezier(.22,.68,0,1.2) forwards;
-          box-shadow: 0 2px 14px rgba(255,255,255,0.22);
+          box-shadow: 0 2px 14px rgba(255,73,61,0.45);
         }
 
         .nav-tooltip {
@@ -142,7 +143,7 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
           white-space: nowrap;
           pointer-events: none;
           animation: tooltipFade 0.2s ease forwards;
-          font-family: monospace;
+           font-family: monospace;
           border: 1px solid rgba(255,255,255,0.1);
           z-index: 100;
         }
@@ -235,9 +236,10 @@ export default function Navbar({ activeNav, setActiveNav, time }) {
                       onMouseEnter={() => setHoveredId(item.id)}
                       onMouseLeave={() => setHoveredId(null)}
                       aria-label={item.label}
+                      aria-current={isActive ? "true" : undefined}
                       className={`nav-btn w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                         isActive
-                          ? "is-active bg-white text-gray-900"
+                          ? "is-active bg-[#FF493D] text-white"
                           : "text-white/70 hover:text-white hover:bg-white/10"
                       }`}
                     >

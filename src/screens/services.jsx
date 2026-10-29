@@ -1,237 +1,43 @@
-import { useEffect, useRef, useState } from "react";
-import { FaMobileAlt, FaDesktop, FaWaveSquare, FaCogs, FaImage, FaBug } from "react-icons/fa";
+import Reveal from "../component/Reveal";
+import SectionHeader from "../component/SectionHeader";
 
 const services = [
   {
-    title: "Mobile App Development",
-    description: "Cross-platform iOS & Android apps built with React Native and Expo. From booking systems to management tools — smooth, fast, and production-ready.",
-    tags: ["React Native", "Expo", "NativeWind"],
-    icon: <FaMobileAlt size={36} />,
+    title: "Web application development",
+    text: "Dashboards, admin panels and business systems in React, built around how your team actually works.",
   },
   {
-    title: "Web App Development",
-    description: "Responsive, modern web applications and business websites with clean UI. From landing pages to full management systems with dashboards and data flows.",
-    tags: ["React", "Vite", "Tailwind CSS"],
-    icon: <FaDesktop size={36} />,
+    title: "API & backend development",
+    text: "REST APIs with authentication and role-based access on Node.js, Express and MySQL, ready to serve both web and mobile.",
   },
   {
-    title: "Backend & API Development",
-    description: "Scalable REST APIs with authentication, role-based access, and secure database integration. Built to power both web and mobile frontends reliably.",
-    tags: ["Node.js", "Express", "MySQL"],
-    icon: <FaWaveSquare size={36} />,
-  },
-  {
-    title: "Management Systems",
-    description: "End-to-end custom systems for hospitals, pharmacies, venues, and businesses — with admin panels, reporting, user roles, and real-time data management.",
-    tags: ["Full Stack", "Admin Panels", "Role Auth"],
-    icon: <FaCogs size={36} />,
-  },
-  {
-    title: "UI/UX Design & Prototyping",
-    description: "Pixel-perfect interfaces with strong attention to aesthetics, layout, and usability. Mockup-first workflow before any code is written — no surprises.",
-    tags: ["Figma", "Component Design", "Dark UI"],
-    icon: <FaImage size={36} />,
-  },
-  {
-    title: "Bug Fixing & Optimization",
-    description: "Diagnosing and resolving bugs in existing codebases — deduplication issues, broken queries, security flaws, or performance bottlenecks in live production apps.",
-    tags: ["Debugging", "SQL Tuning", "Code Review"],
-    icon: <FaBug size={36} />,
+    title: "Mobile app development",
+    text: "Cross-platform iOS and Android apps with React Native and Expo, from first screen to store release.",
   },
 ];
 
-function useInView(threshold = 0.15) {
-  const ref = useRef(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, inView];
-}
-
-function ServiceCard({ service, index, inView }) {
-  const [hovered, setHovered] = useState(false);
-  const col = index % 2;
-  const delay = Math.floor(index / 2) * 0.1 + col * 0.08;
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="p-5 sm:p-6"
-      style={{
-        opacity:   inView ? 1 : 0,
-        transform: inView ? "translateY(0) scale(1)" : "translateY(36px) scale(0.97)",
-        transition: `opacity 0.65s cubic-bezier(.22,.68,0,1.2) ${delay}s,
-                     transform 0.65s cubic-bezier(.22,.68,0,1.2) ${delay}s,
-                     box-shadow 0.3s ease, border-color 0.3s ease`,
-        background: hovered ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.04)",
-        border: `1px solid ${hovered ? "rgba(192,82,42,0.4)" : "rgba(255,255,255,0.07)"}`,
-        boxShadow: hovered ? "0 0 28px rgba(127,17,17,0.25)" : "none",
-        borderRadius: 16,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        cursor: "default",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div style={{
-        position: "absolute", top: 0, left: 0,
-        width: 40, height: 40,
-        borderTop: `2px solid rgba(192,82,42,${hovered ? 0.7 : 0})`,
-        borderLeft: `2px solid rgba(192,82,42,${hovered ? 0.7 : 0})`,
-        borderRadius: "16px 0 0 0",
-        transition: "border-color 0.3s ease",
-      }} />
-
-      <div>
-        <h3 style={{ color: "#fff", fontWeight: 700, fontFamily: "monospace" }} className="text-sm mb-3">
-          {service.title}
-        </h3>
-        <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 13, lineHeight: 1.75, marginBottom: 20, fontFamily: "monospace" }}>
-          {service.description}
-        </p>
-      </div>
-
-      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {service.tags.map((tag, j) => (
-            <span key={j} style={{
-              fontSize: 11, padding: "4px 12px", borderRadius: 999,
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "rgba(255,255,255,0.7)",
-              fontFamily: "monospace",
-              transition: "border-color 0.3s, color 0.3s",
-              ...(hovered ? { borderColor: "rgba(192,82,42,0.5)", color: "rgba(255,180,150,0.9)" } : {}),
-            }}>
-              {tag}
-            </span>
-          ))}
-        </div>
-        <div style={{
-          marginLeft: 16, flexShrink: 0,
-          color: "#7f1111",
-          opacity: hovered ? 0.9 : 0.5,
-          transform: hovered ? "scale(1.15) rotate(-6deg)" : "scale(1) rotate(0deg)",
-          transition: "opacity 0.3s, transform 0.35s cubic-bezier(.22,.68,0,1.2)",
-        }}
-          className="[&>svg]:w-7 [&>svg]:h-7 sm:[&>svg]:w-9 sm:[&>svg]:h-9"
-        >
-          {service.icon}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Services() {
-  const [sectionRef, inView] = useInView(0.1);
-
-  const entrance = (direction, delay) => ({
-    opacity:   inView ? 1 : 0,
-    transform: inView ? "translate(0,0)"
-      : direction === "up"   ? "translateY(28px)"
-      : direction === "down" ? "translateY(-28px)"
-      : "translateY(0)",
-    transition: `opacity 0.7s cubic-bezier(.22,.68,0,1.2) ${delay}s,
-                 transform 0.7s cubic-bezier(.22,.68,0,1.2) ${delay}s`,
-  });
-
   return (
-    <>
-      <style>{`
-        @keyframes dividerGrow {
-          from { width: 0; }
-          to   { width: 48px; }
-        }
-        @keyframes ctaShimmer {
-          0%   { background-position: -200% center; }
-          100% { background-position:  200% center; }
-        }
-        .cta-btn {
-          transition: opacity 0.25s, transform 0.25s, box-shadow 0.25s;
-        }
-        .cta-btn:hover {
-          opacity: 1 !important;
-          transform: translateY(-2px) scale(1.03);
-          box-shadow: 0 0 24px rgba(127,17,17,0.5);
-        }
-        @media (prefers-reduced-motion: reduce) {
-          *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
-        }
-      `}</style>
-
-      <section
-        id="Services"
-        ref={sectionRef}
-        className="min-h-screen w-full py-14 sm:py-16 px-4 sm:px-6 md:px-8 font-mono"
-        style={{ background: "radial-gradient(ellipse at top right, #7f1111 0%, #1a0000 40%, #000000 70%)" }}
-      >
-        <div style={{ ...entrance("down", 0.05), textAlign: "center", marginBottom: 40 }} className="sm:!mb-12">
-          <p style={{ color: "#c0522a", fontSize: 13, letterSpacing: "0.08em", marginBottom: 8 }}>
-            What I offer
-          </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl" style={{ color: "#fff", fontWeight: 700, marginBottom: 16 }}>
-            My Services
-          </h2>
-          <div style={{
-            margin: "0 auto",
-            height: 2,
-            background: "#c0522a",
-            borderRadius: 2,
-            width: inView ? 48 : 0,
-            transition: "width 0.7s cubic-bezier(.22,.68,0,1.2) 0.3s",
-          }} />
-        </div>
-
-        <div
-          className="max-w-6xl mx-auto mb-10 sm:mb-12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5"
-        >
-          {services.map((service, i) => (
-            <ServiceCard key={i} service={service} index={i} inView={inView} />
+    <section id="services" className="bg-[#0B0B0B] border-t border-[#2A2A2A] font-body py-24 md:py-32">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <SectionHeader index="05" label="Services" title="How I can help." />
+        <ol className="border-t border-[#2A2A2A]">
+          {services.map((s, i) => (
+            <Reveal
+              as="li"
+              key={s.title}
+              delay={i * 70}
+              className="grid grid-cols-12 gap-4 md:gap-10 py-7 border-b border-[#2A2A2A]"
+            >
+              <span className="col-span-2 md:col-span-1 font-mono text-xs text-[#FF493D] pt-1.5">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="col-span-10 md:col-span-4 text-xl font-light tracking-tight text-[#F2EEE9]">{s.title}</h3>
+              <p className="col-span-12 col-start-1 md:col-start-auto md:col-span-7 text-[#A7A7A7] leading-7">{s.text}</p>
+            </Reveal>
           ))}
-        </div>
-        <div
-          className="max-w-6xl mx-auto px-6 py-10 sm:px-8 sm:py-12"
-          style={{
-            ...entrance("up", 0.5),
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.07)",
-            borderRadius: 16,
-            textAlign: "center",
-          }}
-        >
-          <h3 className="text-xl sm:text-2xl md:text-[28px]" style={{ color: "#fff", fontWeight: 700, marginBottom: 12 }}>
-            Have a project in mind?
-          </h3>
-          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, letterSpacing: "0.05em", marginBottom: 28 }}>
-            Let's build something great together.
-          </p>
-          <button
-            className="cta-btn"
-            onClick={() => { const s = document.getElementById("contact"); if (s) s.scrollIntoView({ behavior: "smooth", block: "start" }); }}
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "12px 28px", borderRadius: 8,
-              background: "#7f1111", color: "#fff",
-              fontWeight: 600, fontSize: 13, letterSpacing: "0.05em",
-              border: "none", cursor: "pointer",
-            }}
-          >
-            Get In Touch <span style={{ fontSize: 16 }}>↗</span>
-          </button>
-        </div>
-      </section>
-    </>
+        </ol>
+      </div>
+    </section>
   );
 }

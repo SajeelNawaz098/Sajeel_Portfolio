@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "./component/navbar";
 
 import Home from "./screens/home";
+import Projects from "./screens/projects";
 import About from "./screens/about";
 import Experience from "./screens/experience";
 import Services from "./screens/services";
@@ -43,10 +44,11 @@ function App() {
         time={time}
       />
       <Home />
+      <Projects />
       <About />
+      <Experience />
       <Skills />
       <Services />
-      <Experience />
       <Contact />
     </div>
   );
