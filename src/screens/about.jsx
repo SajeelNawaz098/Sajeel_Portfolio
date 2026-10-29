@@ -1,6 +1,6 @@
 import Reveal from "../component/Reveal";
 import SectionHeader from "../component/SectionHeader";
-import aboutImg from "../assets/cardimg.png";
+import aboutImg from "../assets/image.png";
 
 const principles = [
   ["Own the whole stack", "I build the interface, the API and the database, so the pieces fit together."],
