@@ -3,9 +3,9 @@ import SectionHeader from "../component/SectionHeader";
 import aboutImg from "../assets/image.png";
 
 const principles = [
-  ["Own the whole stack", "I build the interface, the API and the database, so the pieces fit together."],
-  ["Match what already works", "When a mobile app exists, I use it as the reference for web behaviour and field names."],
-  ["Ship, then keep it running", "I deploy and maintain live apps, so I write code with production in mind."],
+  ["Contribute as a team", "I collaborate across projects to improve features, fix issues and support reliable delivery."],
+  ["Follow established patterns", "I work with existing codebases, APIs and interfaces to maintain consistency across platforms."],
+  ["Focus on quality", "I help troubleshoot bugs, improve functionality and support stable production applications."],
 ];
 
 export default function About() {

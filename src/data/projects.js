@@ -8,14 +8,14 @@ export const projects = [
     problem:
       "A hospital runs on many connected jobs. HMS Care covers them in a five-portal, role-based system: reception, HR, accounts, pharmacy and administration, plus doctor and laboratory portals.",
     contribution:
-      "Built the laboratory and doctor portals on the shared backend, the public prescription lookup, PDF reports and the analytics dashboard. Fixed routing and live-deployment bugs.",
+    "Contributed across the entire Hospital Management System, developing multiple portals, backend integrations, reports, dashboards and fixing deployment issues.",   
     features: [
-      "Public-facing prescription lookup",
-      "Unique sale IDs (HMS-XXXXXXXX) with collision-retry logic at the database layer",
-      "PDF prescriptions and patient reports with custom fonts and watermarking",
-      "Analytics dashboard with stat cards, weekly sales charts and a top-doctors view",
-      "Standalone Laboratory module in progress: role-based access, barcode sample tracking, auto-flagged results, billing",
-    ],
+        "Multiple role-based portals for hospital staff, doctors and departments",
+        "Shared backend with API and database integrations",
+        "Public prescription lookup and PDF reports",
+        "Analytics dashboards and hospital data insights",
+        "Radiology, Laboratory, Pharmacy, HR, Accounts and Reception workflows",
+      ],
     stack: ["React", "Node.js", "Express", "MySQL", "@react-pdf/renderer"],
     links: {},
   },
