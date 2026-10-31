@@ -1,9 +1,14 @@
 // Content taken from Sajeel's resume. Add `links` ({ live, source, caseStudy }) when you have them.
 // Screenshots: put a file named `<id>.png|jpg|webp` in src/assets/projects/.
+import hmsImage from "../assets/projects/hms.png";
+import budgetPlannerImage from "../assets/projects/budgetplanner.png";
+import shiftPlannerImage from "../assets/projects/shiftflow.png";
+
 export const projects = [
   {
     id: "hms",
     name: "HMS Care",
+    image: hmsImage,
     category: "Hospital Management System · Full-stack",
     problem:
       "A hospital runs on many connected jobs. HMS Care covers them in a five-portal, role-based system: reception, HR, accounts, pharmacy and administration, plus doctor and laboratory portals.",
@@ -37,7 +42,8 @@ export const projects = [
   },
   {
     id: "shift-planner",
-    name: "Shift Planner",
+    name: "Shift Flow",
+    image: shiftPlannerImage,
     category: "Shift scheduling · Mobile app",
     problem:
       "A calendar-based mobile app where users add their jobs and manage their shift schedules.",
@@ -55,6 +61,7 @@ export const projects = [
   {
     id: "budget-planner",
     name: "Budget Planner",
+    image: budgetPlannerImage,
     category: "Personal finance · Mobile app on Google Play",
     problem:
       "A personal finance app for planning a budget and tracking day-to-day expenses.",

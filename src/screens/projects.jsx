@@ -15,7 +15,7 @@ const shotFor = (id) => {
 };
 
 function ProjectShot({ project }) {
-  const src = shotFor(project.id);
+  const src = project.image || shotFor(project.id);
   return (
     <div className="rounded-xl border border-[#2A2A2A] bg-[#111111] overflow-hidden">
       <div className="flex items-center gap-1.5 px-4 h-9 border-b border-[#2A2A2A]" aria-hidden="true">
@@ -30,7 +30,7 @@ function ProjectShot({ project }) {
             alt={`${project.name} screenshot`}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover object-top"
+            className={`w-full h-full object-cover ${project.id === "budget-planner" ? "object-center" : "object-top"}`}
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-center px-6">
