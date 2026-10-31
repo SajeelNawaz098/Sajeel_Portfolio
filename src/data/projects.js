@@ -3,6 +3,7 @@
 import hmsImage from "../assets/projects/hms.png";
 import budgetPlannerImage from "../assets/projects/budgetplanner.png";
 import shiftPlannerImage from "../assets/projects/shiftflow.png";
+import posImage from "../assets/projects/pos.png";
 
 export const projects = [
   {
@@ -27,6 +28,7 @@ export const projects = [
   {
     id: "pos-inventory",
     name: "POS Control Center & Inventory",
+    image: posImage,
     category: "Point of sale · Full-stack",
     problem:
       "Sales, purchases, returns and stock in one place: a POS web app and an inventory management system sharing one backend API.",
