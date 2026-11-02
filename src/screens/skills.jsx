@@ -55,10 +55,11 @@ export default function Skills() {
                 {g.title}
               </h3>
               <ul className="md:col-span-9 flex flex-wrap gap-2.5">
-                {g.items.map(([name, Icon]) => (
+                {g.items.map(([name, Icon], itemIndex) => (
                   <li
                     key={name}
-                    className="inline-flex items-center gap-2 rounded-md border border-[#2A2A2A] bg-[#111111] px-3 py-2 text-sm text-[#F2EEE9]/90"
+                    className="skill-chip inline-flex items-center gap-2 rounded-md border border-[#2A2A2A] bg-[#111111] px-3 py-2 text-sm text-[#F2EEE9]/90"
+                    style={{ "--chip-delay": `${Math.min(itemIndex, 6) * 38}ms` }}
                   >
                     <Icon className="w-4 h-4 text-[#A7A7A7]" aria-hidden="true" />
                     {name}

@@ -15,7 +15,7 @@ export default function About() {
         <SectionHeader index="02" label="About" title="A developer who likes the whole picture." />
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-          <Reveal className="md:col-span-4">
+          <Reveal variant="left" className="md:col-span-4">
             <div className="max-w-[280px] rounded-xl overflow-hidden border border-[#2A2A2A] bg-[#111111]">
               <img
                 src={aboutImg}
@@ -28,13 +28,13 @@ export default function About() {
           </Reveal>
 
           <div className="md:col-span-8">
-            <Reveal delay={80}>
+            <Reveal variant="right" delay={80}>
               <p className="text-xl sm:text-2xl font-light leading-9 text-[#F2EEE9] max-w-2xl">
                 I’m Sajeel, a full-stack developer in Lahore. I build web apps, REST APIs and mobile
                 apps with React, Node.js, MySQL and Expo.
               </p>
             </Reveal>
-            <Reveal delay={140}>
+            <Reveal variant="right" delay={140}>
               <p className="text-[#A7A7A7] leading-8 mt-6 max-w-2xl">
                 I care about clean code, fast screens and interfaces that are easy to use. I’ve worked on
                 hospital, POS and finance products, from the first screen to the live server.

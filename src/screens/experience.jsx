@@ -39,7 +39,7 @@ export default function Experience() {
 
         <ol className="relative border-l border-[#2A2A2A] ml-1.5">
           {experiences.map((e) => (
-            <Reveal as="li" key={e.role + e.period} className="pl-8 md:pl-12 pb-4 relative">
+            <Reveal as="li" variant="left" key={e.role + e.period} className="pl-8 md:pl-12 pb-4 relative">
               <span
                 className="absolute -left-[6px] top-2 w-[11px] h-[11px] rounded-full bg-[#FF493D] ring-4 ring-[#0B0B0B]"
                 aria-hidden="true"

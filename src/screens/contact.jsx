@@ -37,7 +37,7 @@ export default function Contact() {
     <section id="contact" className="bg-[#171717] border-t border-[#2A2A2A] font-body pt-24 md:pt-32">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20">
-          <Reveal className="lg:col-span-6">
+          <Reveal variant="left" className="lg:col-span-6">
             <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#FF493D] mb-6">06 / Contact</p>
             <h2 className="font-light text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.05] text-[#F2EEE9]">
               Have a project in mind?
@@ -71,7 +71,7 @@ export default function Contact() {
             </ul>
           </Reveal>
 
-          <Reveal delay={100} className="lg:col-span-6">
+          <Reveal variant="right" delay={100} className="lg:col-span-6">
             <form
               ref={formRef}
               onSubmit={handleSubmit}

@@ -17,7 +17,7 @@ const shotFor = (id) => {
 function ProjectShot({ project }) {
   const src = project.image || shotFor(project.id);
   return (
-    <div className="rounded-xl border border-[#2A2A2A] bg-[#111111] overflow-hidden">
+    <div className="project-shot rounded-xl border border-[#2A2A2A] bg-[#111111] overflow-hidden">
       <div className="flex items-center gap-1.5 px-4 h-9 border-b border-[#2A2A2A]" aria-hidden="true">
         <span className="w-2.5 h-2.5 rounded-full bg-[#2A2A2A]" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#2A2A2A]" />
@@ -61,7 +61,7 @@ function ProjectRow({ project, index }) {
         <ProjectShot project={project} />
       </div>
 
-      <div className={`lg:col-span-5 ${flip ? "lg:order-1" : ""}`}>
+      <div className={`project-copy lg:col-span-5 ${flip ? "lg:order-1" : ""}`}>
         <p className="font-mono text-xs tracking-[0.15em] uppercase text-[#FF493D] mb-3">
           {String(index + 1).padStart(2, "0")} — {project.category}
         </p>
@@ -139,11 +139,15 @@ export default function Projects() {
           ))}
         </div>
 
-        <Reveal className="mt-8 md:mt-12 pt-12 border-t border-[#2A2A2A]">
+        <Reveal variant="scale" className="mt-8 md:mt-12 pt-12 border-t border-[#2A2A2A]">
           <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#A7A7A7] mb-8">More work</p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-14">
-            {moreWork.map((m) => (
-              <li key={m.name} className="py-6 border-t border-[#2A2A2A]">
+            {moreWork.map((m, i) => (
+              <li
+                key={m.name}
+                className="more-work-item py-6 border-t border-[#2A2A2A]"
+                style={{ "--item-delay": `${i * 90}ms` }}
+              >
                 <h3 className="text-xl font-light tracking-tight text-[#F2EEE9]">{m.name}</h3>
                 <p className="font-mono text-[11px] tracking-wide text-[#FF493D] mt-1.5">{m.kind}</p>
                 <p className="text-sm leading-7 text-[#A7A7A7] mt-3">{m.text}</p>

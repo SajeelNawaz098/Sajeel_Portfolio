@@ -1,12 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Reveal({ as: Tag = "div", delay = 0, className = "", children, ...rest }) {
+export default function Reveal({
+  as: Tag = "div",
+  delay = 0,
+  variant = "up",
+  className = "",
+  children,
+  style,
+  ...rest
+}) {
   const ref = useRef(null);
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    if (
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setShown(true);
+      return;
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -14,7 +31,7 @@ export default function Reveal({ as: Tag = "div", delay = 0, className = "", chi
           io.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -5% 0px" }
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -23,8 +40,8 @@ export default function Reveal({ as: Tag = "div", delay = 0, className = "", chi
   return (
     <Tag
       ref={ref}
-      className={`reveal${shown ? " is-visible" : ""} ${className}`}
-      style={{ transitionDelay: shown ? `${delay}ms` : "0ms" }}
+      className={`reveal reveal--${variant}${shown ? " is-visible" : ""} ${className}`}
+      style={{ ...style, "--reveal-delay": `${delay}ms` }}
       {...rest}
     >
       {children}

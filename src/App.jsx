@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "./component/navbar";
+import ScrollProgress from "./component/ScrollProgress";
 
 import Home from "./screens/home";
 import Projects from "./screens/projects";
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <div>
+      <ScrollProgress />
       <Navbar
         activeNav={activeNav}
         setActiveNav={setActiveNav}
